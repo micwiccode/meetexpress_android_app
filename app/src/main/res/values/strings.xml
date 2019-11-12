@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">meetexpress</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="title_activity_create_event">CreateEventActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="create">Create</string>
+    <string name="find_event">Find event</string>
+    <string name="your_events">Your events</string>
 </resources>
