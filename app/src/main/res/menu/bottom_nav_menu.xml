@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:id="@+id/menu_create"
+        android:icon="@drawable/ic_create_white_24dp"
+        android:title="Create"/>
+
+    <item android:id="@+id/menu_find"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="Search"/>
+
+
+    <item android:id="@+id/menu_review"
+        android:icon="@drawable/ic_rate_review_white_24dp"
+        android:title="Review"/>
+
+
 </menu>
