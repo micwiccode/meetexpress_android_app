@@ -2,17 +2,12 @@ package com.example.meetexpress
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import java.nio.file.Files.size
 import com.google.android.gms.tasks.Task
-import androidx.annotation.NonNull
-import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_sign_up.*
-
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -25,8 +20,6 @@ class SignUpActivity : AppCompatActivity() {
         nextButton.setOnClickListener{
             createUser()
         }
-
-
     }
 
     public override fun onStart() {
