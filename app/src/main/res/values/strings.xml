@@ -28,4 +28,13 @@
         <item>E-sport</item>
     </string-array>
 
+
+    <string name="take_part">Take part</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="search">Search</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+
 </resources>

@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import kotlinx.android.synthetic.main.fragment_find_event.*
 
 /**
  * A simple [Fragment] subclass.
@@ -16,9 +18,8 @@ class FindEventFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_find_event, container, false)
+        val layout = inflater.inflate(R.layout.fragment_find_event, container, false)
+        val searchButton = layout.findViewById<ImageButton>(R.id.btn_search)
+        return layout
     }
-
-
 }
