@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "679980641134",
+    "firebase_url": "https://meetexpress-5372d.firebaseio.com",
+    "project_id": "meetexpress-5372d",
+    "storage_bucket": "meetexpress-5372d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679980641134:android:72f55df07a34e5209faf7f",
+        "android_client_info": {
+          "package_name": "com.example.meetexpress"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679980641134-i570q2sr51briukdp0ttg4aflnhlbd3s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.meetexpress",
+            "certificate_hash": "b32e801d22c2141709a325560c8e5e5af2785730"
+          }
+        },
+        {
+          "client_id": "679980641134-3o8cq3a00croql5tgqe00n3j0bos2skl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3U2FQkSsOOfkHdP-snlylNIN_x4LFbLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679980641134-3o8cq3a00croql5tgqe00n3j0bos2skl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
