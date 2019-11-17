@@ -12,7 +12,7 @@
         android:layout_width="390dp"
         android:layout_height="62dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="casual"
         android:text="@string/create_event"
@@ -92,10 +92,10 @@
 
         <Spinner
             android:id="@+id/categories_spinner"
-            android:layout_width="200dp"
+            android:layout_width="300dp"
             android:layout_height="?attr/dropdownListPreferredItemHeight"
             android:background="@drawable/spinner_back"
-            android:dropDownWidth="200dp"
+            android:dropDownWidth="300dp"
             android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
             android:paddingRight="14dp"
             android:popupBackground="@color/blue"

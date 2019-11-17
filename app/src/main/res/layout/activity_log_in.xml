@@ -23,8 +23,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:fontFamily="casual"
         android:text="@string/log_in"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -35,13 +36,15 @@
         android:id="@+id/nameText"
         android:layout_width="288dp"
         android:layout_height="59dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:background="@color/design_default_color_background"
         android:ems="10"
         android:hint="@string/login"
+        android:textColorHint="@color/grey"
         android:inputType="textPersonName"
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -49,27 +52,44 @@
         android:id="@+id/surnameText"
         android:layout_width="289dp"
         android:layout_height="61dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="20dp"
         android:background="@color/design_default_color_background"
         android:ems="10"
         android:hint="@string/password"
+        android:textColorHint="@color/grey"
         android:inputType="textPassword"
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailText" />
+        app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="141dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="132dp"
-        android:background="#5576E3"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_login"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:padding="15dp"
+        android:textSize="16sp"
         android:text="@string/log_in"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordText" />
+        app:layout_constraintTop_toBottomOf="@+id/surnameText"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_sign_up_google"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login">
+
+    </com.google.android.gms.common.SignInButton>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

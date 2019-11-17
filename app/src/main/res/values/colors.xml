@@ -9,5 +9,7 @@
     <color name="grey">#ccc</color>
     <color name="light_grey">#eee</color>
     <color name="black">#000</color>
+    <color name="red">#DB0F0F</color>
+    <color name="green">#03FF25</color>
 
 </resources>
