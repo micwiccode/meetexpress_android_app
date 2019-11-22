@@ -23,6 +23,7 @@
             android:fontFamily="casual"
             android:text="@string/find_event"
             android:textColor="@color/blue"
+            android:layout_marginLeft="16dp"
             android:textSize="36sp"
             android:textStyle="bold" />
 
