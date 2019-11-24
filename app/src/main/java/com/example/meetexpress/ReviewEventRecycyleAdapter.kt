@@ -16,7 +16,7 @@ class ReviewEventRecycyleAdapter(val eventsList: ArrayList<Event>) : RecyclerVie
         holder.cardMembersActual.text = event.actualPeople.toString()
         holder.cardMembersMax.text = event.maxPeople.toString()
         holder.cardCategory.text = event.category
-        holder.cardDate.text = SimpleDateFormat("yyyy-MM-dd").format(event.date.time)
+        holder.cardDate.text = event.date.toString()
         holder.cardAddress.text = event.place
         holder.cardImage.setImageResource(event.photo)
     }

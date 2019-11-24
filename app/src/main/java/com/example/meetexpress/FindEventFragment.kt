@@ -12,6 +12,8 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_find_event.*
+import java.time.LocalDate
+import java.time.temporal.ChronoField
 import java.util.*
 
 /**
@@ -29,11 +31,10 @@ class FindEventFragment : Fragment() {
         recycleView.layoutManager = LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
 
         val eventsList = ArrayList<Event>()
-        val calendar = Calendar.getInstance()
-        calendar.set(2019,11,10)
-        eventsList.add(Event("Play football", calendar,0,12,"Wrocław, Wittiga 15 Street", "Sport", R.drawable.sport_image))
-        calendar.set(2019,10,30)
-        eventsList.add(Event("FIFA 20 Tournament", calendar,4,48,"Wrocław, Sienkiewicza 2 Street", "E-sport", R.drawable.esport_image))
+        var date = LocalDate.parse("2019-11-10").getLong(ChronoField.EPOCH_DAY)
+        eventsList.add(Event("Play football", date,0,12,"Wrocław, Wittiga 15 Street", "Sport", R.drawable.sport_image))
+        date = LocalDate.parse("2019-10-09").getLong(ChronoField.EPOCH_DAY)
+        eventsList.add(Event("FIFA 20 Tournament", date,4,48,"Wrocław, Sienkiewicza 2 Street", "E-sport", R.drawable.esport_image))
 
         val adapter = FindEventRecycyleAdapter(eventsList)
         recycleView.adapter = adapter
