@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.time.LocalDate
@@ -32,7 +31,7 @@ class ReviewEventsFragment : Fragment() {
         date = LocalDate.parse("2019-12-09").getLong(ChronoField.EPOCH_DAY)
         eventsList.add(Event("FIFA 20 Tournament", date,4,48,"Wrocław, Sienkiewicza 2 Street", "E-sport", R.drawable.esport_image))
 
-        val adapter = ReviewEventRecycyleAdapter(eventsList)
+        val adapter = ReviewEventRecyclerAdapter(eventsList)
         recycleView.adapter = adapter
 
         return layout

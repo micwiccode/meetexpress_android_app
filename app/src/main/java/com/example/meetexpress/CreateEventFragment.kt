@@ -25,6 +25,8 @@ import java.time.temporal.ChronoField
  */
 class CreateEventFragment : Fragment() {
 
+    private val db = FirebaseFirestore.getInstance()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,7 +55,6 @@ class CreateEventFragment : Fragment() {
         val maxPeople = input_text_members.text.toString().toInt()
         val place = input_text_place.text.toString()
         val date = LocalDate.parse(input_text_date.text.toString(), DateTimeFormatter.ofPattern("dd.MM.yyyy")).getLong(ChronoField.EPOCH_DAY)
-        val db = FirebaseFirestore.getInstance()
         val category = categories_spinner.selectedItem.toString()
 
         val event = Event(name, date, 0, maxPeople, place, category)

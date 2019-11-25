@@ -6,10 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import java.text.SimpleDateFormat
-import kotlin.collections.ArrayList
 
-class FindEventRecycyleAdapter(val eventsList: ArrayList<Event>) : RecyclerView.Adapter<FindEventRecycyleAdapter.ViewHolder>(){
+class ReviewEventRecyclerAdapter(val eventsList: ArrayList<Event>) : RecyclerView.Adapter<ReviewEventRecyclerAdapter.ViewHolder>(){
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val event : Event = eventsList[position]
@@ -23,7 +21,7 @@ class FindEventRecycyleAdapter(val eventsList: ArrayList<Event>) : RecyclerView.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.find_event_card_layout, parent, false)
+        val view = LayoutInflater.from(parent?.context).inflate(R.layout.review_event_card_layout, parent, false)
         return ViewHolder(view)
     }
 
@@ -40,5 +38,7 @@ class FindEventRecycyleAdapter(val eventsList: ArrayList<Event>) : RecyclerView.
         val cardImage = itemView.findViewById<ImageView>(R.id.cardImage)
         val cardDate = itemView.findViewById<TextView>(R.id.cardDate)
         val cardAddress = itemView.findViewById<TextView>(R.id.cardAddress)
+
+
     }
 }

@@ -1,7 +1,8 @@
 package com.example.meetexpress
 
-class User {
+class Profile {
 
+    private var uid = ""
     private var name = ""
     private var surname = ""
     private var age = 0

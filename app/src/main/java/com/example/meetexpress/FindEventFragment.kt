@@ -1,25 +1,32 @@
 package com.example.meetexpress
 
 
-import android.media.session.PlaybackState
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_find_event.*
+import com.google.firebase.firestore.FirebaseFirestore
 import java.time.LocalDate
 import java.time.temporal.ChronoField
-import java.util.*
+import kotlin.collections.ArrayList
+import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.Query
+
 
 /**
  * A simple [Fragment] subclass.
  */
 class FindEventFragment : Fragment() {
+
+    val db = FirebaseFirestore.getInstance()
+    lateinit var recyclerView: RecyclerView
+    lateinit var adapter: FindEventRecyclerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,18 +34,82 @@ class FindEventFragment : Fragment() {
     ): View? {
         val layout = inflater.inflate(R.layout.fragment_find_event, container, false)
 //        val searchButton = layout.findViewById<ImageButton>(R.id.btn_search)
-        val recycleView = layout.findViewById<RecyclerView>(R.id.recycleView)
-        recycleView.layoutManager = LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
+        recyclerView = layout.findViewById(R.id.recycleView)
+        recyclerView.layoutManager =
+            LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
+        fetch()
+
 
         val eventsList = ArrayList<Event>()
         var date = LocalDate.parse("2019-11-10").getLong(ChronoField.EPOCH_DAY)
-        eventsList.add(Event("Play football", date,0,12,"Wrocław, Wittiga 15 Street", "Sport", R.drawable.sport_image))
+        eventsList.add(
+            Event(
+                "Play football",
+                date,
+                0,
+                12,
+                "Wrocław, Wittiga 15 Street",
+                "Sport",
+                R.drawable.sport_image
+            )
+        )
         date = LocalDate.parse("2019-10-09").getLong(ChronoField.EPOCH_DAY)
-        eventsList.add(Event("FIFA 20 Tournament", date,4,48,"Wrocław, Sienkiewicza 2 Street", "E-sport", R.drawable.esport_image))
+        eventsList.add(
+            Event(
+                "FIFA 20 Tournament",
+                date,
+                4,
+                48,
+                "Wrocław, Sienkiewicza 2 Street",
+                "E-sport",
+                R.drawable.esport_image
+            )
+        )
 
-        val adapter = FindEventRecycyleAdapter(eventsList)
-        recycleView.adapter = adapter
 
         return layout
     }
+
+    private fun getEvents(): ArrayList<Event> {
+        val eventList = ArrayList<Event>()
+        db.collection("events")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val event = document.toObject(Event::class.java)
+                    eventList.add(event)
+                    Log.d("Pobieramy", "${document.id} => ${document.data}")
+
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("Pobieramy", "Error getting documents.", exception)
+            }
+
+        return eventList
+    }
+
+    private fun fetch() {
+        val query = db.collection("events").orderBy("name", Query.Direction.ASCENDING)
+
+        val options = FirestoreRecyclerOptions.Builder<Event>()
+            .setQuery(
+                query, Event::class.java)
+            .build()
+
+
+        adapter = FindEventRecyclerAdapter(options)
+        recyclerView.adapter = adapter
+    }
+
+    override fun onStart() {
+        super.onStart()
+        adapter.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.stopListening()
+    }
 }
+
