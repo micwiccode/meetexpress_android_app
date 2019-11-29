@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.temporal.ChronoField
 import java.util.*
@@ -26,9 +27,10 @@ class ReviewEventsFragment : Fragment() {
         recycleView.layoutManager = LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
 
         val eventsList = ArrayList<Event>()
-        var date = LocalDate.parse("2019-11-10").getLong(ChronoField.EPOCH_DAY)
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+        var date = dateFormat.parse("10-11-2019").time
         eventsList.add(Event("Play football", date,0,12,"Wrocław, Wittiga 15 Street", "Sport", R.drawable.sport_image))
-        date = LocalDate.parse("2019-12-09").getLong(ChronoField.EPOCH_DAY)
+        date = dateFormat.parse("09-11-2019").time
         eventsList.add(Event("FIFA 20 Tournament", date,4,48,"Wrocław, Sienkiewicza 2 Street", "E-sport", R.drawable.esport_image))
 
         val adapter = ReviewEventRecyclerAdapter(eventsList)

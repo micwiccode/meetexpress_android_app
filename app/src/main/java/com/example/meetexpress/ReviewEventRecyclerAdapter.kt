@@ -6,16 +6,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
 
 class ReviewEventRecyclerAdapter(val eventsList: ArrayList<Event>) : RecyclerView.Adapter<ReviewEventRecyclerAdapter.ViewHolder>(){
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
         val event : Event = eventsList[position]
         holder.cardTitle.text = event.name
         holder.cardMembersActual.text = event.actualPeople.toString()
         holder.cardMembersMax.text = event.maxPeople.toString()
         holder.cardCategory.text = event.category
-        holder.cardDate.text = event.date.toString()
+        holder.cardDate.text = dateFormat.format(event.date)
         holder.cardAddress.text = event.place
         holder.cardImage.setImageResource(event.photo)
     }

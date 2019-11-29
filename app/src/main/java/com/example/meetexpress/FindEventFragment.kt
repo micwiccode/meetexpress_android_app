@@ -1,6 +1,7 @@
 package com.example.meetexpress
 
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +18,8 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.fragment_create_event.*
+import java.text.SimpleDateFormat
 
 
 /**
@@ -39,9 +42,9 @@ class FindEventFragment : Fragment() {
             LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
         fetch()
 
-
+        val dateFormat =  SimpleDateFormat("dd-MM-yyyy")
         val eventsList = ArrayList<Event>()
-        var date = LocalDate.parse("2019-11-10").getLong(ChronoField.EPOCH_DAY)
+        var date = dateFormat.parse("10-11-2019").time
         eventsList.add(
             Event(
                 "Play football",
@@ -53,7 +56,7 @@ class FindEventFragment : Fragment() {
                 R.drawable.sport_image
             )
         )
-        date = LocalDate.parse("2019-10-09").getLong(ChronoField.EPOCH_DAY)
+        date = dateFormat.parse("09-10-2019").time
         eventsList.add(
             Event(
                 "FIFA 20 Tournament",

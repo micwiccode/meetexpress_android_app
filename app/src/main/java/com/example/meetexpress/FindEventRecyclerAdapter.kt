@@ -11,18 +11,20 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import kotlin.collections.ArrayList
 
 class FindEventRecyclerAdapter(val options: FirestoreRecyclerOptions<Event>) :
     FirestoreRecyclerAdapter<Event, FindEventRecyclerAdapter.ViewHolder>(options) {
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: Event) {
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
         Log.d("XDD", "XDD")
         holder.cardTitle.text = model.name
         holder.cardMembersActual.text = model.actualPeople.toString()
         holder.cardMembersMax.text = model.maxPeople.toString()
         holder.cardCategory.text = model.category
-        holder.cardDate.text = LocalDate.ofEpochDay(model.date).toString()
+        holder.cardDate.text = dateFormat.format(model.date)
         holder.cardAddress.text = model.place
 //        holder.cardImage.setImageResource(model.photo)
     }
