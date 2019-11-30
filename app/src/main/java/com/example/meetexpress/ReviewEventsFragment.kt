@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
@@ -23,6 +24,12 @@ class ReviewEventsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val layout = inflater.inflate(R.layout.fragment_review_events, container, false)
+
+        val navBtn = layout.findViewById<ImageButton>(R.id.nav_btn)
+        navBtn.setOnClickListener{
+            (activity as MenuActivity).openDrawer()
+        }
+
         val recycleView = layout.findViewById<RecyclerView>(R.id.recycleView)
         recycleView.layoutManager = LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
 

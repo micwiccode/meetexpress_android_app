@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,6 +38,12 @@ class FindEventFragment : Fragment() {
     ): View? {
         val layout = inflater.inflate(R.layout.fragment_find_event, container, false)
 //        val searchButton = layout.findViewById<ImageButton>(R.id.btn_search)
+
+        val navBtn = layout.findViewById<ImageButton>(R.id.nav_btn)
+        navBtn.setOnClickListener{
+            (activity as MenuActivity).openDrawer()
+        }
+
         recyclerView = layout.findViewById(R.id.recycleView)
         recyclerView.layoutManager =
             LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)

@@ -18,9 +18,7 @@ import java.time.temporal.ChronoField
 import android.app.DatePickerDialog
 import android.widget.*
 import java.text.SimpleDateFormat
-import java.time.Month
-import java.time.MonthDay
-import java.time.Year
+import android.app.TimePickerDialog
 
 /**
  * A simple [Fragment] subclass.
@@ -31,7 +29,11 @@ class CreateEventFragment : Fragment() {
     private var year = 2019
     private var month = 1
     private var day = 1
+    private var hour = 0
+    private var minute = 0
     private var dateTextView: TextView? =null
+    private var timeTextView: TextView? =null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,20 +41,35 @@ class CreateEventFragment : Fragment() {
     ): View? {
         val layout = inflater.inflate(R.layout.fragment_create_event, container, false)
 
+        val navBtn = layout.findViewById<ImageButton>(R.id.nav_btn)
+        navBtn.setOnClickListener{
+            (activity as MenuActivity).openDrawer()
+        }
+
         val calendar = Calendar.getInstance()
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         day = calendar.get(Calendar.DAY_OF_MONTH)
+        hour = calendar.get(Calendar.HOUR_OF_DAY)
+        minute = calendar.get(Calendar.MINUTE)
         val datePickerBtn = layout.findViewById<ImageButton>(R.id.date_picker_btn)
-        dateTextView = layout.findViewById(R.id.date_text_view)
+        val timePickerBtn = layout.findViewById<ImageButton>(R.id.time_picker_btn)
 
         setDate(year, month, day)
+        setTime(hour, minute)
 
         datePickerBtn.setOnClickListener{
             val dpd = DatePickerDialog(activity, DatePickerDialog.OnDateSetListener { _, mYear, mMonth, mDay   ->
-                date_text_view.text = "" + mDay + "-" + mMonth + "-" + mYear
+                date_text_view.text = "" + String.format("%02d", mDay) + "-" + String.format("%02d", mMonth+1) + "-" + String.format("%02d", mYear)
             }, year, month, day )
             dpd.show()
+        }
+
+        timePickerBtn.setOnClickListener{
+            val tpd = TimePickerDialog(activity, TimePickerDialog.OnTimeSetListener { _, mHour, mMinute   ->
+                time_text_view.text = "" + String.format("%02d", mHour) + ":" + String.format("%02d", mMinute)
+            }, hour, minute, true )
+            tpd.show()
         }
 
         val spinner = layout.findViewById<Spinner>(R.id.categories_spinner)
@@ -72,8 +89,12 @@ class CreateEventFragment : Fragment() {
         return layout
     }
 
+    private fun setTime(hour: Int, minute: Int) {
+        timeTextView?.text = "" + String.format("%02d", hour) + ":" + String.format("%02d", minute)
+    }
+
     private fun setDate(year: Int, month: Int, day: Int) {
-        dateTextView?.text = "" + day + "-" + month + "-" + year
+        dateTextView?.text = "" + String.format("%02d", day) + "-" + String.format("%02d", month+1) + "-" + String.format("%02d", year)
     }
 
     private fun addEvent() {
