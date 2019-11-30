@@ -42,5 +42,6 @@
 
     <string name="dont_have_account">No account? Create it now</string>
     <string name="date">Date (DD.MM.YYYY)</string>
+    <string name="change_photo">Change profile photo</string>
 
 </resources>
