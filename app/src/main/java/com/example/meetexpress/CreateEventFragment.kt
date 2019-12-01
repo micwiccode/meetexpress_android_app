@@ -31,9 +31,6 @@ class CreateEventFragment : Fragment() {
     private var day = 1
     private var hour = 0
     private var minute = 0
-    private var dateTextView: TextView? =null
-    private var timeTextView: TextView? =null
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,46 +39,16 @@ class CreateEventFragment : Fragment() {
         val layout = inflater.inflate(R.layout.fragment_create_event, container, false)
 
         val navBtn = layout.findViewById<ImageButton>(R.id.nav_btn)
-        navBtn.setOnClickListener{
+        navBtn.setOnClickListener {
             (activity as MenuActivity).openDrawer()
         }
 
-        val calendar = Calendar.getInstance()
-        year = calendar.get(Calendar.YEAR)
-        month = calendar.get(Calendar.MONTH)
-        day = calendar.get(Calendar.DAY_OF_MONTH)
-        hour = calendar.get(Calendar.HOUR_OF_DAY)
-        minute = calendar.get(Calendar.MINUTE)
-        val datePickerBtn = layout.findViewById<ImageButton>(R.id.date_picker_btn)
-        val timePickerBtn = layout.findViewById<ImageButton>(R.id.time_picker_btn)
-
-        setDate(year, month, day)
-        setTime(hour, minute)
-
-        datePickerBtn.setOnClickListener{
-            val dpd = DatePickerDialog(activity, DatePickerDialog.OnDateSetListener { _, mYear, mMonth, mDay   ->
-                date_text_view.text = "" + String.format("%02d", mDay) + "-" + String.format("%02d", mMonth+1) + "-" + String.format("%02d", mYear)
-            }, year, month, day )
-            dpd.show()
-        }
-
-        timePickerBtn.setOnClickListener{
-            val tpd = TimePickerDialog(activity, TimePickerDialog.OnTimeSetListener { _, mHour, mMinute   ->
-                time_text_view.text = "" + String.format("%02d", mHour) + ":" + String.format("%02d", mMinute)
-            }, hour, minute, true )
-            tpd.show()
-        }
-
         val spinner = layout.findViewById<Spinner>(R.id.categories_spinner)
-        spinner.adapter = ArrayAdapter.createFromResource(activity!!.applicationContext, R.array.categories, android.R.layout.simple_spinner_dropdown_item)
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-//                Toast.makeText(activity, "Selected $pos",Toast.LENGTH_LONG).show()
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
+        spinner.adapter = ArrayAdapter.createFromResource(
+            activity!!.applicationContext,
+            R.array.categories,
+            android.R.layout.simple_spinner_dropdown_item
+        )
 
         layout.btn_create.setOnClickListener {
             addEvent()
@@ -89,32 +56,98 @@ class CreateEventFragment : Fragment() {
         return layout
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        val calendar = Calendar.getInstance()
+        year = calendar.get(Calendar.YEAR)
+        month = calendar.get(Calendar.MONTH)
+        day = calendar.get(Calendar.DAY_OF_MONTH)
+        hour = calendar.get(Calendar.HOUR_OF_DAY)
+        minute = calendar.get(Calendar.MINUTE)
+
+        setDate(year, month, day)
+        setTime(hour, minute)
+
+        date_picker_btn.setOnClickListener {
+            showDatePicker()
+        }
+
+        time_picker_btn.setOnClickListener {
+            showTimePicker()
+        }
+    }
+
+    private fun showTimePicker() {
+        val tpd =
+            TimePickerDialog(activity, TimePickerDialog.OnTimeSetListener { _, mHour, mMinute ->
+                setTime(mHour, mMinute)
+            }, hour, minute, true)
+        tpd.show()
+    }
+
+    private fun showDatePicker() {
+        val dpd = DatePickerDialog(
+            activity,
+            DatePickerDialog.OnDateSetListener { _, mYear, mMonth, mDay ->
+                setDate(mYear, mMonth, mDay)
+            },
+            year, month, day
+        )
+        dpd.show()
+    }
+
     private fun setTime(hour: Int, minute: Int) {
-        timeTextView?.text = "" + String.format("%02d", hour) + ":" + String.format("%02d", minute)
+        time_text_view?.text = "" + String.format("%02d", hour) + ":" + String.format("%02d", minute)
     }
 
     private fun setDate(year: Int, month: Int, day: Int) {
-        dateTextView?.text = "" + String.format("%02d", day) + "-" + String.format("%02d", month+1) + "-" + String.format("%02d", year)
+        date_text_view?.text = "" + String.format("%02d", day) + "-" + String.format("%02d", month + 1) + "-" + String.format("%02d", year)
     }
 
     private fun addEvent() {
+
         val name = input_text_name.text.toString()
-        val maxPeople = input_text_members.text.toString().toInt()
+        val maxPeople = input_text_members.text.toString()
         val place = input_text_place.text.toString()
-        val dateFormat =  SimpleDateFormat("dd-MM-yyyy")
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
         val date = dateFormat.parse(date_text_view.text.toString()).time
+        val timeFormat = SimpleDateFormat("hh:mm")
+        val time = timeFormat.parse(time_text_view.text.toString()).time
         val category = categories_spinner.selectedItem.toString()
 
-        val event = Event(name, date, 0, maxPeople, place, category)
+        if ( validate(name, maxPeople, place)) {
 
-        db.collection("events")
-            .add(event)
-            .addOnSuccessListener { documentReference ->
-                Log.d("Dodawanie", "Event added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w("Dodawanie", "Error adding document", e)
-            }
+            val event = Event(name, date, time, 0, maxPeople.toInt(), place, category)
+
+            db.collection("events")
+                .add(event)
+                .addOnSuccessListener { documentReference ->
+                    Log.d("Dodawanie", "Event added with ID: ${documentReference.id}")
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Dodawanie", "Error adding document", e)
+                }
+        }
+    }
+
+    private fun validate(name: String, maxPeople: String, place: String) :Boolean {
+
+        var isValid = true
+
+        if (name.isEmpty()) {
+            input_layout_name.error = "Name is required"
+            isValid = false
+        }
+
+        if (maxPeople.isEmpty()) {
+            input_layout_members.error = "Number od people is required"
+            isValid = false
+        }
+        if (place.isEmpty()) {
+            input_layout_place.error = "Place is required"
+            isValid = false
+        }
+        return isValid
     }
 }
 

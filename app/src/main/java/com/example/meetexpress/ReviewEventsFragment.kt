@@ -35,10 +35,13 @@ class ReviewEventsFragment : Fragment() {
 
         val eventsList = ArrayList<Event>()
         val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val timeFormat =  SimpleDateFormat("hh:mm")
         var date = dateFormat.parse("10-11-2019").time
-        eventsList.add(Event("Play football", date,0,12,"Wrocław, Wittiga 15 Street", "Sport", R.drawable.sport_image))
+        var time = timeFormat.parse("11:00").time
+        eventsList.add(Event("Play football", date, time,0,12,"Wrocław, Wittiga 15 Street", "Sport", R.drawable.sport_image))
         date = dateFormat.parse("09-11-2019").time
-        eventsList.add(Event("FIFA 20 Tournament", date,4,48,"Wrocław, Sienkiewicza 2 Street", "E-sport", R.drawable.esport_image))
+        time = timeFormat.parse("12:30").time
+        eventsList.add(Event("FIFA 20 Tournament", date, time,4,48,"Wrocław, Sienkiewicza 2 Street", "E-sport", R.drawable.esport_image))
 
         val adapter = ReviewEventRecyclerAdapter(eventsList)
         recycleView.adapter = adapter
