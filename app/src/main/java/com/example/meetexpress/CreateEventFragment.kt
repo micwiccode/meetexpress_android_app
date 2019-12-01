@@ -138,7 +138,6 @@ class CreateEventFragment : Fragment() {
             input_layout_name.error = "Name is required"
             isValid = false
         }
-
         if (maxPeople.isEmpty()) {
             input_layout_members.error = "Number od people is required"
             isValid = false

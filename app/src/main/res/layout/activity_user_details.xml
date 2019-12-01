@@ -7,13 +7,11 @@
     android:background="@color/white"
     tools:context=".UserDetails">
 
-
     <ImageView
         android:id="@+id/profile_photo"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
