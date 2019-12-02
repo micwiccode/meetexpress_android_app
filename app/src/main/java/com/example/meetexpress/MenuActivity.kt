@@ -5,20 +5,33 @@ import android.os.Bundle
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_menu.*
+import androidx.drawerlayout.widget.DrawerLayout
+import android.content.Intent
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.widget.Toast
+import com.google.android.material.navigation.NavigationView
 
-class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+
+class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
 
     private val createFragment : CreateEventFragment = CreateEventFragment()
     private val findFragment : FindEventFragment = FindEventFragment()
     private val reviewFragment : ReviewEventsFragment = ReviewEventsFragment()
+    private var drawerLayout : DrawerLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
-        val bottomNavigationView : BottomNavigationView = bottom_nav_view
+        drawerLayout = findViewById(R.id.drawer_layout)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
         bottomNavigationView.setOnNavigationItemSelectedListener(this)
         bottomNavigationView.selectedItemId = R.id.menu_create
+
+        val navigationView = findViewById<NavigationView>(R.id.nav)
+        navigationView.setNavigationItemSelectedListener(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -36,7 +49,16 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.container, reviewFragment).commit()
                 return true
             }
+            R.id.edit_account -> {
+                val i = Intent(this@MenuActivity, UserDetails::class.java)
+                startActivity(i)
+                return true
+            }
         }
         return false
+    }
+
+    fun openDrawer() {
+        drawerLayout?.openDrawer(nav)
     }
 }

@@ -7,49 +7,68 @@
     tools:context=".CreateEventFragment"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/textView3"
+    <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:fontFamily="casual"
-        android:text="@string/create_event"
-        android:textColor="@color/blue"
-        android:textSize="36sp"
-        android:textStyle="bold"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/nav_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_menu_black_24dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="casual"
+            android:text="@string/create_event"
+            android:textColor="@color/blue"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="415dp"
-        android:layout_height="500dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingHorizontal="50dp"
+        android:paddingHorizontal="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.331">
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_name"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:hint="@string/name"
             android:textColorHint="@color/grey"
-            app:boxStrokeColor="@color/blue">
+            app:boxStrokeColor="@color/blue"
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_text_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/blue" />
+                android:textColor="@color/blue"
+                android:textSize="12sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,16 +77,19 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:hint="@string/number_of_members"
             android:textColorHint="@color/grey"
-            app:boxStrokeColor="@color/blue">
+            app:boxStrokeColor="@color/blue"
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_text_members"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/blue" />
+                android:inputType="number"
+                android:textColor="@color/blue"
+                android:textSize="12sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,38 +98,66 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:hint="@string/place"
             android:textColorHint="@color/grey"
             app:boxStrokeColor="@color/blue"
+            app:errorEnabled="true"
             app:hintTextColor="@color/blue">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_text_place"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/blue" />
+                android:textColor="@color/blue"
+                android:textSize="12sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_layout_date"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint="@string/date"
-            android:textColorHint="@color/grey"
-            app:boxStrokeColor="@color/blue">
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_text_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:textColor="@color/blue" />
+            <TextView
+                android:id="@+id/date_text_view"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <ImageButton
+                android:id="@+id/date_picker_btn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/icons8calendar"
+                android:padding="0dp"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/time_text_view"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/time_picker_btn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/ic_access_time_black_24dp"
+                android:padding="0dp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
 
         <Spinner
             android:id="@+id/categories_spinner"
@@ -118,7 +168,7 @@
             android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
             android:paddingRight="14dp"
             android:popupBackground="@color/blue"
-            android:popupElevation="3dp"
+            android:popupElevation="1dp"
             android:stateListAnimator="@drawable/spinner_animation" />
 
         <com.google.android.material.button.MaterialButton

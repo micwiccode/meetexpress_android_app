@@ -42,5 +42,7 @@
 
     <string name="dont_have_account">No account? Create it now</string>
     <string name="date">Date (DD.MM.YYYY)</string>
+    <string name="change_photo">Change profile photo</string>
+    <string name="sign_up_prompt"><u>Don\'t have an account. Sign up</u></string>
 
 </resources>
