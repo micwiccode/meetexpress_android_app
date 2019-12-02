@@ -25,10 +25,11 @@
         android:background="@color/design_default_color_background"
         android:ems="10"
         android:hint="@string/name"
-        android:textColorHint="@color/grey"
         android:inputType="textPersonName"
         android:padding="15dp"
+        android:textColor="@color/black"
 
+        android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,9 +43,10 @@
         android:background="@color/design_default_color_background"
         android:ems="10"
         android:hint="@string/surname"
-        android:textColorHint="@color/grey"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:padding="15dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,24 +60,26 @@
         android:background="@color/design_default_color_background"
         android:ems="10"
         android:hint="@string/age"
-        android:textColorHint="@color/grey"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:padding="15dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/surnameText" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/cityText"
         android:layout_width="289dp"
         android:layout_height="61dp"
         android:layout_marginTop="16dp"
         android:background="@color/design_default_color_background"
         android:ems="10"
         android:hint="@string/city"
-        android:textColorHint="@color/grey"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:padding="15dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ageText" />
@@ -94,6 +98,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+        app:layout_constraintTop_toBottomOf="@+id/cityText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

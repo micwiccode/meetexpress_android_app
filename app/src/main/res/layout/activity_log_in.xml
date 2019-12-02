@@ -70,7 +70,6 @@
         app:boxStrokeColor="@color/white"
         app:errorEnabled="true"
         app:hintTextColor="@color/white"
-        app:errorTextAppearance="@style/error_appearance"
         android:paddingHorizontal="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

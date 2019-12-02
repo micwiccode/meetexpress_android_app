@@ -28,17 +28,22 @@ import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.io.FileNotFoundException
 
 
 class UserDetails : AppCompatActivity() {
 
     val RESULT_LOAD_IMG = 1
+    private lateinit var auth: FirebaseAuth
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_details)
-
+        auth = FirebaseAuth.getInstance()
+        fillFromDb()
         val startImage = RoundedBitmapDrawableFactory.create(resources, BitmapFactory.decodeResource(resources, R.drawable.logo))
         setOvalShapedPhoto(startImage)
 
@@ -78,14 +83,27 @@ class UserDetails : AppCompatActivity() {
     }
 
     private fun changeValue(index: Int, newValue : String) {
+
+        val profileRef = db.collection("profiles").document(auth.currentUser!!.uid)
         when(index){
             0 -> {
                 name.text = newValue
-                name_main.text = newValue
+                profileRef.update("name", newValue)
+
             }
-            1 -> surname.text = newValue
-            2 -> age.text = newValue
-            3 -> city.text = newValue
+            1 ->{
+                surname.text = newValue
+                profileRef.update("surname", newValue)
+            }
+            2 -> {
+                age.text = newValue
+                profileRef.update("age", newValue.toInt())
+            }
+            3 -> {
+                city.text = newValue
+                profileRef.update("city", newValue)
+
+            }
         }
     }
 
@@ -109,5 +127,18 @@ class UserDetails : AppCompatActivity() {
             }
         } else {
         }
+    }
+
+    private fun fillFromDb(){
+
+        val docRef = db.collection("profiles").document(auth.currentUser!!.uid)
+        docRef.get().addOnSuccessListener { documentSnapshot ->
+            val profile = documentSnapshot.toObject(Profile::class.java)
+            name.text = profile!!.name
+            city.text = profile.city
+            age.text = profile.age.toString()
+            surname.text = profile.surname
+        }
+
     }
 }
