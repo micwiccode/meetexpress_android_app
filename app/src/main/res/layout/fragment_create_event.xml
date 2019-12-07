@@ -153,7 +153,7 @@
                 android:id="@+id/time_picker_btn"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@drawable/ic_access_time_black_24dp"
+                android:background="@drawable/ic_access_time_24dp"
                 android:padding="0dp"
                 android:textColor="@color/white" />
 

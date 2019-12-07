@@ -85,22 +85,22 @@ class FindEventFragment : Fragment() {
     }
 
     private fun getEvents(): ArrayList<Event> {
-        val eventList = ArrayList<Event>()
+        val eventsList = ArrayList<Event>()
         db.collection("events")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val event = document.toObject(Event::class.java)
-                    eventList.add(event)
-                    Log.d("Pobieramy", "${document.id} => ${document.data}")
+                    eventsList.add(event)
+                    Log.d("Downloading", "${document.id} => ${document.data}")
 
                 }
             }
             .addOnFailureListener { exception ->
-                Log.w("Pobieramy", "Error getting documents.", exception)
+                Log.w("Downloading", "Error getting documents.", exception)
             }
 
-        return eventList
+        return eventsList
     }
 
     private fun fetch() {

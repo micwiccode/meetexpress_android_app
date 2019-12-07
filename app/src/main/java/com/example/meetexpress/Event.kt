@@ -1,6 +1,8 @@
 package com.example.meetexpress
 
-class Event() {
+import java.io.Serializable
+
+class Event() :Serializable {
 
     var name = ""
     var date: Long = 0
