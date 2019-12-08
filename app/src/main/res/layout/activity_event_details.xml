@@ -29,7 +29,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/name"
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/cardCategory"
+                android:id="@+id/category"
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                 android:background="@drawable/ic_access_time_24dp" />
 
             <TextView
-                android:id="@+id/cardDate"
+                android:id="@+id/date"
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/time_text_view"
+                android:id="@+id/time"
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                 android:background="@drawable/ic_place_24dp" />
 
             <TextView
-                android:id="@+id/cardAddress"
+                android:id="@+id/address"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/mapbtn"
+                android:id="@+id/map_btn"
                 app:icon="@drawable/ic_map_24dp"
                 app:iconTint="@color/white"
                 android:layout_width="150dp"
@@ -172,7 +172,7 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/takepartbtn"
+                android:id="@+id/take_part_btn"
                 app:icon="@drawable/ic_person_add_white_24dp"
                 app:iconTint="@color/white"
                 android:layout_width="150dp"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#5576E3</color>
@@ -11,5 +11,7 @@
     <color name="black">#000000</color>
     <color name="red">#DB0F0F</color>
     <color name="green">#03FF25</color>
+
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#fff</color>
 
 </resources>

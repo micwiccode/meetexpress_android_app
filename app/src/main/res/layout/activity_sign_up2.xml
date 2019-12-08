@@ -17,74 +17,116 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/nameText"
-        android:layout_width="288dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/design_default_color_background"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/name"
-        android:inputType="textPersonName"
-        android:padding="15dp"
-        android:textColor="@color/black"
-
+        android:paddingHorizontal="30dp"
         android:textColorHint="@color/grey"
+        app:boxStrokeColor="@color/white"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-    <EditText
-        android:id="@+id/surnameText"
-        android:layout_width="289dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/design_default_color_background"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/surnameLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/surname"
-        android:inputType="text"
-        android:padding="15dp"
-        android:textColor="@color/black"
+        android:paddingHorizontal="30dp"
         android:textColorHint="@color/grey"
+        app:boxStrokeColor="@color/white"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameText" />
+        app:layout_constraintTop_toBottomOf="@+id/nameLayout">
 
-    <EditText
-        android:id="@+id/ageText"
-        android:layout_width="289dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/design_default_color_background"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/surnameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ageLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/age"
-        android:inputType="text"
-        android:padding="15dp"
-        android:textColor="@color/black"
+        android:paddingHorizontal="30dp"
         android:textColorHint="@color/grey"
+        app:boxStrokeColor="@color/white"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/surnameText" />
+        app:layout_constraintTop_toBottomOf="@+id/surnameLayout">
 
-    <EditText
-        android:id="@+id/cityText"
-        android:layout_width="289dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/design_default_color_background"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ageText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cityLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/city"
-        android:inputType="text"
-        android:padding="15dp"
-        android:textColor="@color/black"
+        android:paddingHorizontal="30dp"
         android:textColorHint="@color/grey"
+        app:boxStrokeColor="@color/white"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ageText" />
+        app:layout_constraintTop_toBottomOf="@+id/ageLayout">
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/cityText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_sign_up_confirm"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -98,6 +140,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cityText" />
+        app:layout_constraintTop_toBottomOf="@+id/cityLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
