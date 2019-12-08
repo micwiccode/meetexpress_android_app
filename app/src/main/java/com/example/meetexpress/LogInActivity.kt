@@ -62,15 +62,15 @@ class LogInActivity : AppCompatActivity() {
     private fun validate(email: String, password: String): Boolean {
 
         var isValid = true
-        if (email.isEmpty()) {
-            input_layout_login_email.error = "Please enter email"
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            input_layout_login_email.error = "Please enter valid email"
             isValid = false
         }
         else{
             input_layout_login_email.error = null
         }
-        if (password.isEmpty()) {
-            input_layout_login_password.error = "Please enter password"
+        if (password.trim().length < 6) {
+            input_layout_login_password.error = "Please enter password (at least 6 characters)"
             isValid = false
         }
         else{

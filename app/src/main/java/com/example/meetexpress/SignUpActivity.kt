@@ -112,15 +112,15 @@ class SignUpActivity : AppCompatActivity() {
         ): Boolean {
 
             var isValid = true
-            if (name.isEmpty()) {
-                nameLayout.error = "Please enter name"
+            if (name.trim().length < 2) {
+                nameLayout.error = "Please enter a valid name"
                 isValid = false
             }
             else{
                 nameLayout.error = null
             }
-            if (surname.isEmpty()) {
-                surnameLayout.error = "Please enter surname"
+            if (surname.trim().length < 2) {
+                surnameLayout.error = "Please enter a valid surname"
                 isValid = false
             }
             else{
@@ -158,28 +158,30 @@ class SignUpActivity : AppCompatActivity() {
             else{
                 emailLayout.error = null
             }
-            if (password.isEmpty()) {
-                passwordLayout.error = "Please enter password"
+            if (password.trim().length < 6) {
+                passwordLayout.error = "Please enter password (at least 6 characters)"
                 isValid = false
             }
             else{
                 passwordLayout.error = null
             }
-            if (repeatPassword.isEmpty()) {
-                repeatPasswordLayout.error = "Please enter password"
+            if (repeatPassword.trim().length < 6) {
+                repeatPasswordLayout.error = "Please enter password (at least 6 characters)"
                 isValid = false
             }
             else{
                 repeatPasswordLayout.error = null
             }
-            if (password != repeatPassword) {
-                passwordLayout.error = "Passwords are not the same"
-                repeatPasswordLayout.error = "Passwords are not the same"
-                isValid = false
-            }
-            else{
-                passwordLayout.error = null
-                repeatPasswordLayout.error = null
+            if(!(password.trim().length < 6 && repeatPassword.trim().length < 6)){
+                if (password != repeatPassword) {
+                    passwordLayout.error = "Passwords are not the same"
+                    repeatPasswordLayout.error = "Passwords are not the same"
+                    isValid = false
+                }
+                else{
+                    passwordLayout.error = null
+                    repeatPasswordLayout.error = null
+                }
             }
             return isValid
         }
