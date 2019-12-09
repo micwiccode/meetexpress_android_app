@@ -9,15 +9,21 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.temporal.ChronoField
 import java.util.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class ReviewEventsFragment : Fragment() {
+
+    val db = FirebaseFirestore.getInstance()
+    lateinit var recyclerView: RecyclerView
+    lateinit var adapter: ReviewEventsRecyclerAdapter
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,9 +35,9 @@ class ReviewEventsFragment : Fragment() {
         navBtn.setOnClickListener{
             (activity as MenuActivity).openDrawer()
         }
-
-        val recycleView = layout.findViewById<RecyclerView>(R.id.recycleView)
-        recycleView.layoutManager = LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
+        auth = FirebaseAuth.getInstance()
+        recyclerView = layout.findViewById(R.id.recycleView)
+        recyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
 
         val eventsList = ArrayList<Event>()
         val dateFormat = SimpleDateFormat("dd-MM-yyyy")
@@ -42,12 +48,32 @@ class ReviewEventsFragment : Fragment() {
         date = dateFormat.parse("09-11-2019").time
         time = timeFormat.parse("12:30").time
         eventsList.add(Event("FIFA 20 Tournament", date, time,4,48,"Wrocław, Sienkiewicza 2 Street", "E-sport", R.drawable.esport_image))
-
-        val adapter = ReviewEventRecyclerAdapter(eventsList)
-        recycleView.adapter = adapter
+        fetch()
 
         return layout
     }
 
+    private fun fetch() {
+        val query = db.collection("events").whereArrayContains("profiles", auth.currentUser!!.uid)
+
+        val options = FirestoreRecyclerOptions.Builder<Event>()
+            .setQuery(
+                query, Event::class.java)
+            .build()
+
+
+        adapter = ReviewEventsRecyclerAdapter(options)
+        recyclerView.adapter = adapter
+    }
+
+    override fun onStart() {
+        super.onStart()
+        adapter.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.stopListening()
+    }
 
 }

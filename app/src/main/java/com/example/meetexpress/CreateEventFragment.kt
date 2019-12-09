@@ -19,6 +19,8 @@ import android.app.DatePickerDialog
 import android.widget.*
 import java.text.SimpleDateFormat
 import android.app.TimePickerDialog
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 
 /**
  * A simple [Fragment] subclass.
@@ -31,12 +33,16 @@ class CreateEventFragment : Fragment() {
     private var day = 1
     private var hour = 0
     private var minute = 0
+    private lateinit var auth: FirebaseAuth
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val layout = inflater.inflate(R.layout.fragment_create_event, container, false)
+        auth = FirebaseAuth.getInstance()
 
         val navBtn = layout.findViewById<ImageButton>(R.id.nav_btn)
         navBtn.setOnClickListener {
@@ -119,14 +125,29 @@ class CreateEventFragment : Fragment() {
 
             val event = Event(name, date, time, 0, maxPeople.toInt(), place, category)
 
-            db.collection("events")
+            val eventsCollection = db.collection("events")
+            eventsCollection
                 .add(event)
                 .addOnSuccessListener { documentReference ->
                     Log.d("Dodawanie", "Event added with ID: ${documentReference.id}")
+                    eventsCollection
+                        .document(documentReference.id)
+                        .update("profiles", FieldValue.arrayUnion(auth.currentUser!!.uid))
+                    eventsCollection
+                        .document(documentReference.id)
+                        .update("creatorId", auth.currentUser!!.uid)
+
+                    db.collection("profiles")
+                        .document(auth.currentUser!!.uid)
+                        .update("hostedEvents", FieldValue.arrayUnion(documentReference.id))
+
+
                 }
                 .addOnFailureListener { e ->
                     Log.w("Dodawanie", "Error adding document", e)
                 }
+
+
         }
     }
 

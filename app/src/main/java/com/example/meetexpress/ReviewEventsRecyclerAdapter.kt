@@ -6,29 +6,31 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import java.text.SimpleDateFormat
 
-class ReviewEventRecyclerAdapter(val eventsList: ArrayList<Event>) : RecyclerView.Adapter<ReviewEventRecyclerAdapter.ViewHolder>(){
+class ReviewEventsRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
+    FirestoreRecyclerAdapter<Event, ReviewEventsRecyclerAdapter.ViewHolder>(options){
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+        model: Event
+    ) {
         val dateFormat = SimpleDateFormat("dd-MM-yyyy")
-        val event : Event = eventsList[position]
-        holder.cardTitle.text = event.name
-        holder.cardMembersActual.text = event.actualPeople.toString()
-        holder.cardMembersMax.text = event.maxPeople.toString()
-        holder.cardCategory.text = event.category
-        holder.cardDate.text = dateFormat.format(event.date)
-        holder.cardAddress.text = event.place
-        holder.cardImage.setImageResource(event.photo)
+        holder.cardTitle.text = model.name
+        holder.cardMembersActual.text = model.actualPeople.toString()
+        holder.cardMembersMax.text = model.maxPeople.toString()
+        holder.cardCategory.text = model.category
+        holder.cardDate.text = dateFormat.format(model.date)
+        holder.cardAddress.text = model.place
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.review_event_card_layout, parent, false)
         return ViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        return eventsList.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

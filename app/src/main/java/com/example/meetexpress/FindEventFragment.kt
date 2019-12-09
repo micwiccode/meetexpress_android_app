@@ -17,6 +17,7 @@ import java.time.temporal.ChronoField
 import kotlin.collections.ArrayList
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_create_event.*
@@ -31,6 +32,8 @@ class FindEventFragment : Fragment() {
     val db = FirebaseFirestore.getInstance()
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: FindEventRecyclerAdapter
+    private lateinit var auth: FirebaseAuth
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +43,7 @@ class FindEventFragment : Fragment() {
 //        val searchButton = layout.findViewById<ImageButton>(R.id.btn_search)
 
         val navBtn = layout.findViewById<ImageButton>(R.id.nav_btn)
+        auth = FirebaseAuth.getInstance()
         navBtn.setOnClickListener{
             (activity as MenuActivity).openDrawer()
         }
@@ -81,6 +85,7 @@ class FindEventFragment : Fragment() {
 
 
         adapter = FindEventRecyclerAdapter(options)
+        adapter.userId = auth.currentUser!!.uid
         recyclerView.adapter = adapter
     }
 
@@ -92,6 +97,11 @@ class FindEventFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         adapter.stopListening()
+    }
+
+    private fun takePart(){
+
+        db.collection("events")
     }
 }
 
