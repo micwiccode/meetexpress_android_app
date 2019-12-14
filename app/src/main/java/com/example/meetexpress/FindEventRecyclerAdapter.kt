@@ -45,10 +45,7 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
                 context.startActivity(intent)
             }
         }
-
-
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -59,7 +56,7 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val cardView: CardView = itemView.findViewById(R.id.cardView);
+        val cardView: CardView = itemView.findViewById(R.id.cardView)
         val cardTitle: TextView = itemView.findViewById(R.id.cardTitle)
         val cardMembersActual: TextView = itemView.findViewById(R.id.cardMembersActual)
         val cardMembersMax: TextView = itemView.findViewById(R.id.cardMembersMax)

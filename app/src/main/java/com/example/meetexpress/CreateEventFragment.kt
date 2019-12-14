@@ -74,11 +74,11 @@ class CreateEventFragment : Fragment() {
         setDate(year, month, day)
         setTime(hour, minute)
 
-        date_picker_btn.setOnClickListener {
+        date_box.setOnClickListener {
             showDatePicker()
         }
 
-        time_picker_btn.setOnClickListener {
+        time_box.setOnClickListener {
             showTimePicker()
         }
     }

@@ -120,42 +120,56 @@
             android:layout_marginBottom="20dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/date_text_view"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/blue"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/date_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/date_picker_btn"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="@drawable/icons8calendar"
-                android:padding="0dp"
-                android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/date_text_view"
+                    android:layout_width="90dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/blue"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/time_text_view"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/blue"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                <ImageButton
+                    android:id="@+id/date_picker_btn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/icons8calendar"
+                    android:padding="0dp"
+                    android:textColor="@color/white" />
 
-            <ImageButton
-                android:id="@+id/time_picker_btn"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="@drawable/ic_access_time_24dp"
-                android:padding="0dp"
-                android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/time_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/time_text_view"
+                    android:layout_width="90dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/blue"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/time_picker_btn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/ic_access_time_24dp"
+                    android:padding="0dp"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
