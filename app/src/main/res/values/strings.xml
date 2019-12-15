@@ -57,7 +57,7 @@
     <string name="log_out">Log out</string>
     <string name="save">Save</string>
     <string name="categories">Categories:</string>
-    <string name="nearby">Only events from yur nearby</string>
+    <string name="nearby">Only events from your nearby</string>
     <string name="not_take_part">Not take part</string>
 
 </resources>
