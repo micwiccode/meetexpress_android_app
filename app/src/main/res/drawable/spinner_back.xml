@@ -3,7 +3,7 @@
     <item android:state_pressed="true" android:drawable="@color/blue" />
     <item android:state_selected="true" android:drawable="@color/blue" />
     <item>
-        <inset android:insetLeft="-1dp" android:insetRight="-1dp">
+        <inset android:insetLeft="0dp" android:insetRight="0dp">
             <shape android:shape="rectangle">
                 <corners
                     android:radius="6dp" />

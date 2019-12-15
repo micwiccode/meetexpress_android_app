@@ -17,4 +17,10 @@
         android:title="@string/about"
         android:icon="@drawable/ic_help_black_24dp">
     </item>
+
+    <item
+        android:id="@+id/log_out"
+        android:title="@string/log_out"
+        android:icon="@drawable/ic_exit_to_app_24dp">
+    </item>
 </menu>

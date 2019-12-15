@@ -1,6 +1,7 @@
 package com.example.meetexpress
 
 
+import android.app.Activity
 import java.util.Calendar
 import android.icu.util.LocaleData
 import android.os.Bundle
@@ -19,14 +20,23 @@ import android.app.DatePickerDialog
 import android.widget.*
 import java.text.SimpleDateFormat
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.TypedValue
+import androidx.core.graphics.drawable.RoundedBitmapDrawable
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
+import kotlinx.android.synthetic.main.activity_user_details.*
+import java.io.FileNotFoundException
 
 /**
  * A simple [Fragment] subclass.
  */
 class CreateEventFragment : Fragment() {
 
+    private val RESULT_LOAD_IMG = 1
     private val db = FirebaseFirestore.getInstance()
     private var year = 2019
     private var month = 1
@@ -34,8 +44,6 @@ class CreateEventFragment : Fragment() {
     private var hour = 0
     private var minute = 0
     private lateinit var auth: FirebaseAuth
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +66,10 @@ class CreateEventFragment : Fragment() {
 
         layout.btn_create.setOnClickListener {
             addEvent()
+        }
+
+        layout.btn_pick_photo.setOnClickListener {
+            pickPhoto()
         }
         return layout
     }
@@ -169,6 +181,39 @@ class CreateEventFragment : Fragment() {
         }
         return isValid
     }
+
+    private fun pickPhoto() {
+        val photoPickerIntent = Intent(Intent.ACTION_PICK)
+        photoPickerIntent.type = "image/*"
+        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode === Activity.RESULT_OK) {
+            try {
+                val imageUri = data?.getData()
+                val imageStream = activity?.contentResolver?.openInputStream(imageUri)
+                val selectedImage = BitmapFactory.decodeStream(imageStream)
+                setPickerBackground(selectedImage)
+                Toast.makeText(activity, "Image selected", Toast.LENGTH_SHORT)
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            }
+        } else {
+        }
+    }
+
+    private fun setPickerBackground(image : Bitmap) {
+        btn_pick_photo.setBackgroundResource(0)
+        val scale = resources.displayMetrics.density.toInt()
+        btn_pick_photo.layoutParams.height = 90*scale
+        btn_pick_photo.layoutParams.width = 90*scale
+        btn_pick_photo.requestLayout()
+        btn_pick_photo.setImageBitmap(image)
+    }
 }
+
 
 

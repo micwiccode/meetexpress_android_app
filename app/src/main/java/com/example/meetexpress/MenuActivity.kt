@@ -12,6 +12,10 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.widget.Toast
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_user_details.*
+import kotlinx.android.synthetic.main.navigation_header.*
 
 
 class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
@@ -20,10 +24,14 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private val findFragment : FindEventFragment = FindEventFragment()
     private val reviewFragment : ReviewEventsFragment = ReviewEventsFragment()
     private var drawerLayout : DrawerLayout? = null
+    private lateinit var auth: FirebaseAuth
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+        auth = FirebaseAuth.getInstance()
+        fillFromDb()
 
         drawerLayout = findViewById(R.id.drawer_layout)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
@@ -54,11 +62,25 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 startActivity(i)
                 return true
             }
+            R.id.log_out -> {
+                finish()
+                return true
+            }
         }
         return false
     }
 
     fun openDrawer() {
         drawerLayout?.openDrawer(nav)
+    }
+
+    private fun fillFromDb() {
+
+        val docRef = db.collection("profiles").document(auth.currentUser!!.uid)
+        docRef.get().addOnSuccessListener { documentSnapshot ->
+            val profile = documentSnapshot.toObject(Profile::class.java)
+            user_name.text = profile!!.name
+            user.text = profile.name + " " + profile.surname
+        }
     }
 }

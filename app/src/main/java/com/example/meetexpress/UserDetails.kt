@@ -35,7 +35,7 @@ import java.io.FileNotFoundException
 
 class UserDetails : AppCompatActivity() {
 
-    val RESULT_LOAD_IMG = 1
+    private val RESULT_LOAD_IMG = 1
     private lateinit var auth: FirebaseAuth
     private val db = FirebaseFirestore.getInstance()
 
@@ -51,14 +51,12 @@ class UserDetails : AppCompatActivity() {
             changePhoto()
         }
 
+        save.setOnClickListener {
+            finish()
+        }
+
         val editButtons= arrayOf(name_edit, surname_edit, age_edit, city_edit)
         editButtons.forEachIndexed { index, btn -> btn.setOnClickListener{ openDialog(index) }}
-    }
-
-    private fun setOvalShapedPhoto(image : RoundedBitmapDrawable) {
-        image.isCircular = true
-        profile_photo.setImageDrawable(null)
-        profile_photo.setImageDrawable(image)
     }
 
     private fun openDialog(index :Int) {
@@ -89,7 +87,6 @@ class UserDetails : AppCompatActivity() {
             0 -> {
                 name.text = newValue
                 profileRef.update("name", newValue)
-
             }
             1 ->{
                 surname.text = newValue
@@ -102,7 +99,6 @@ class UserDetails : AppCompatActivity() {
             3 -> {
                 city.text = newValue
                 profileRef.update("city", newValue)
-
             }
         }
     }
@@ -127,6 +123,12 @@ class UserDetails : AppCompatActivity() {
             }
         } else {
         }
+    }
+
+    private fun setOvalShapedPhoto(image : RoundedBitmapDrawable) {
+        image.isCircular = true
+        profile_photo.setImageDrawable(null)
+        profile_photo.setImageDrawable(image)
     }
 
     private fun fillFromDb(){
