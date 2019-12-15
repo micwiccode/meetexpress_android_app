@@ -165,7 +165,7 @@
             android:layout_height="60dp"
             android:layout_marginHorizontal="40dp"
             android:padding="10dp"
-            android:text="@string/delete"
+            android:text="@string/not_take_part"
             android:textColor="@color/white"
             app:icon="@drawable/ic_do_not_24dp"
             app:iconTint="@color/white" />

@@ -56,5 +56,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="log_out">Log out</string>
     <string name="save">Save</string>
+    <string name="categories">Categories:</string>
+    <string name="nearby">Only events from yur nearby</string>
+    <string name="not_take_part">Not take part</string>
 
 </resources>

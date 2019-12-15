@@ -5,18 +5,33 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.measurement.module.Analytics
 import kotlinx.android.synthetic.main.activity_event_details.*
 import java.text.SimpleDateFormat
+import android.content.Intent
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.net.Uri
 
-class EventDetails: AppCompatActivity() {
+
+class FindEventDetails : AppCompatActivity() {
+
+    private lateinit var addressInfo: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_details)
         getIncomingIntent()
+
+        map_btn.setOnClickListener {
+            val mapUri = Uri.parse("geo:0,0?q=$addressInfo")
+            val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
+        }
     }
 
-    private fun getIncomingIntent(){
-        if(intent.hasExtra("model")){
-            val event :Event = intent.getSerializableExtra("model") as Event
+    private fun getIncomingIntent() {
+        if (intent.hasExtra("model")) {
+            val event: Event = intent.getSerializableExtra("model") as Event
             val dateFormat = SimpleDateFormat("dd-MM-yyyy")
             val timeFormat = SimpleDateFormat("hh:mm")
             name.text = event.name
@@ -25,7 +40,8 @@ class EventDetails: AppCompatActivity() {
             category.text = event.category
             date.text = dateFormat.format(event.date)
             time.text = timeFormat.format(event.time)
-            address.text = event.place
+            addressInfo = event.place
+            address.text = addressInfo
         }
     }
 }

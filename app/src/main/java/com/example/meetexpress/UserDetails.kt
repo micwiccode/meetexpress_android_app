@@ -66,6 +66,7 @@ class UserDetails : AppCompatActivity() {
         val confirm = view.findViewById<Button>(R.id.confirm)
         builder.setView(view)
         val dialog : AlertDialog = builder.create()
+        dialog.window.attributes.windowAnimations = R.style.dialogAnimation
         dialog.show()
 
         confirm.setOnClickListener{

@@ -40,7 +40,7 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
 
             val context = holder.cardView.context
             holder.cardView.setOnClickListener {
-                val intent = Intent(context, EventDetails::class.java)
+                val intent = Intent(context, FindEventDetails::class.java)
                 intent.putExtra("model", model)
                 context.startActivity(intent)
             }

@@ -23,7 +23,7 @@
 
         </activity>
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".EventDetails" />
+        <activity android:name=".FindEventDetails" />
         <activity android:name=".MyEventDetails" />
         <activity android:name=".TakePartEventDetails" />
     </application>
