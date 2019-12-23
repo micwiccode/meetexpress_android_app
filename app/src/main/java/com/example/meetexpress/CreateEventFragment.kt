@@ -23,12 +23,17 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.util.TypedValue
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_user_details.*
+import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.FileNotFoundException
 
 /**
@@ -44,7 +49,8 @@ class CreateEventFragment : Fragment() {
     private var hour = 0
     private var minute = 0
     private lateinit var auth: FirebaseAuth
-
+    private var storageRef = FirebaseStorage.getInstance().reference
+    private var photoUri: Uri? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -135,16 +141,24 @@ class CreateEventFragment : Fragment() {
 
         if ( validate(name, maxPeople, place)) {
 
-            val event = Event(name, date, time, 0, maxPeople.toInt(), place, category)
+            val event = Event(name, date, time, 0, maxPeople.toInt(), place, category, auth.currentUser!!.uid)
 
             val eventsCollection = db.collection("events")
             eventsCollection
                 .add(event)
                 .addOnSuccessListener { documentReference ->
                     Log.d("Dodawanie", "Event added with ID: ${documentReference.id}")
-                    eventsCollection
-                        .document(documentReference.id)
-                        .update("profiles", FieldValue.arrayUnion(auth.currentUser!!.uid))
+                    val photoStorageRef = storageRef.child("events/"+ documentReference.id +".jpg")
+                    if(photoUri!=null){
+                        Log.d("XD", photoUri!!.path)
+                        photoStorageRef.putFile(photoUri!!)
+                            .addOnSuccessListener {
+                                Log.d("XD", "Jest git")
+                            }
+                            .addOnFailureListener{
+                                Log.d("XD", it.message)
+                            }
+                    }
                     eventsCollection
                         .document(documentReference.id)
                         .update("creatorId", auth.currentUser!!.uid)
@@ -193,7 +207,8 @@ class CreateEventFragment : Fragment() {
 
         if (resultCode === Activity.RESULT_OK) {
             try {
-                val imageUri = data?.getData()
+                val imageUri = data?.data!!
+                photoUri = imageUri
                 val imageStream = activity?.contentResolver?.openInputStream(imageUri)
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
                 setPickerBackground(selectedImage)

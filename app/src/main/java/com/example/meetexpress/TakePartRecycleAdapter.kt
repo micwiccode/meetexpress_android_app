@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat
 class TakePartRecycleAdapter(options: FirestoreRecyclerOptions<Event>) :
     FirestoreRecyclerAdapter<Event, TakePartRecycleAdapter.ViewHolder>(options) {
 
+
     override fun onBindViewHolder(
         holder: ViewHolder,
         position: Int,

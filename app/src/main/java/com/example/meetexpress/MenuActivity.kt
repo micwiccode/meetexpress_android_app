@@ -31,15 +31,16 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         auth = FirebaseAuth.getInstance()
-        fillFromDb()
 
         drawerLayout = findViewById(R.id.drawer_layout)
+
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
         bottomNavigationView.setOnNavigationItemSelectedListener(this)
         bottomNavigationView.selectedItemId = R.id.menu_create
 
         val navigationView = findViewById<NavigationView>(R.id.nav)
         navigationView.setNavigationItemSelectedListener(this)
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -72,6 +73,7 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     fun openDrawer() {
         drawerLayout?.openDrawer(nav)
+        fillFromDb()
     }
 
     private fun fillFromDb() {

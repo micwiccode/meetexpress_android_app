@@ -35,7 +35,7 @@ class MyEventsFragment : Fragment() {
     }
 
     private fun fetch() {
-        val query = db.collection("events").whereArrayContains("profiles", auth.currentUser!!.uid)
+        val query = db.collection("events").whereEqualTo("creatorId", auth.currentUser!!.uid)
 
         val options = FirestoreRecyclerOptions.Builder<Event>()
             .setQuery(

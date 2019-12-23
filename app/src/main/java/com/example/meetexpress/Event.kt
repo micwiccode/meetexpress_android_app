@@ -15,7 +15,7 @@ class Event() :Serializable {
     var profiles: ArrayList<String> = ArrayList()
     var creatorId: String = ""
 
-    constructor(_name: String, _date: Long, _time:Long, _actualPeople: Int, _maxPeople: Int, _place: String, _category : String, _photo: Int = 0) : this(){
+    constructor(_name: String, _date: Long, _time:Long, _actualPeople: Int, _maxPeople: Int, _place: String, _category : String, _creatorId : String, _photo: Int = 0) : this(){
         name = _name
         date = _date
         time = _time
@@ -24,6 +24,7 @@ class Event() :Serializable {
         place = _place
         category = _category
         photo = _photo
+        creatorId = _creatorId
     }
 
 }
