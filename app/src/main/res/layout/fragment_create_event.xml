@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".CreateEventFragment">
 
     <LinearLayout
@@ -142,7 +141,7 @@
                         android:id="@+id/date_picker_btn"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:background="@drawable/icons8calendar"
+                        android:background="@drawable/ic_today_black_24dp"
                         android:padding="0dp"
                         android:textColor="@color/white" />
 

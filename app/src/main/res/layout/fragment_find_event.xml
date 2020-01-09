@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".FindEventFragment">
-
+    tools:context=".FindEventFragment"
+    android:id="@+id/find">
 
     <LinearLayout
         android:id="@+id/header"
@@ -65,7 +64,6 @@
                 android:id="@+id/recycleView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/light_grey"
                 android:nestedScrollingEnabled="false"
                 android:orientation="vertical"></androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>

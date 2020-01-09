@@ -59,6 +59,7 @@ class CreateEventFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         val navBtn = layout.findViewById<ImageButton>(R.id.nav_btn)
+        if((this.activity as MenuActivity).dark) navBtn.setBackgroundResource(R.drawable.ic_menu_white_24dp)
         navBtn.setOnClickListener {
             (activity as MenuActivity).openDrawer()
         }

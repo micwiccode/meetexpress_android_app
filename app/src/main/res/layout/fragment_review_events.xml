@@ -6,8 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".FindEventFragment"
-    android:background="@color/white">
+    tools:context=".FindEventFragment">
 
     <LinearLayout
         android:id="@+id/header"
@@ -46,8 +45,7 @@
         app:tabGravity="fill"
         app:tabTextColor="@color/blue"
         app:tabIndicatorColor="@color/blue"
-        app:tabIndicatorHeight="2dp"
-        android:background="@color/white" />
+        app:tabIndicatorHeight="2dp"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"

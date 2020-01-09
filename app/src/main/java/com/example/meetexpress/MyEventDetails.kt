@@ -2,6 +2,7 @@ package com.example.meetexpress
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,8 +27,15 @@ class MyEventDetails: AppCompatActivity() {
     private lateinit var eventTime : TextView
     private val dateFormat = SimpleDateFormat("dd-MM-yyyy")
     private val timeFormat = SimpleDateFormat("hh:mm")
+    private val privateMode = 0
+    private val prefsFileName = "prefs"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val prefs: SharedPreferences = getSharedPreferences(prefsFileName, privateMode)
+        val themeController = ThemeController()
+        setTheme(themeController.changeTheme(prefs))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_event_details)
 

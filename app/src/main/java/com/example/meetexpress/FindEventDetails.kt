@@ -6,6 +6,7 @@ import com.google.android.gms.measurement.module.Analytics
 import kotlinx.android.synthetic.main.activity_event_details.*
 import java.text.SimpleDateFormat
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
@@ -15,8 +16,14 @@ import android.net.Uri
 class FindEventDetails : AppCompatActivity() {
 
     private lateinit var addressInfo: String
+    private val privateMode = 0
+    private val prefsFileName = "prefs"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val prefs: SharedPreferences = getSharedPreferences(prefsFileName, privateMode)
+        val themeController = ThemeController()
+        setTheme(themeController.changeTheme(prefs))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_details)
         getIncomingIntent()

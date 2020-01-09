@@ -24,6 +24,7 @@ import android.widget.Toast
 import android.graphics.Bitmap
 import android.R.attr.data
 import android.app.Activity
+import android.content.SharedPreferences
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
@@ -38,8 +39,14 @@ class UserDetails : AppCompatActivity() {
     private val RESULT_LOAD_IMG = 1
     private lateinit var auth: FirebaseAuth
     private val db = FirebaseFirestore.getInstance()
+    private val privateMode = 0
+    private val prefsFileName = "prefs"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val prefs: SharedPreferences = getSharedPreferences(prefsFileName, privateMode)
+        val themeController = ThemeController()
+        setTheme(themeController.changeTheme(prefs))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_details)
         auth = FirebaseAuth.getInstance()

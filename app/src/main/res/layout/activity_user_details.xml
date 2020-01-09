@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".UserDetails">
 
     <ImageView
@@ -41,7 +40,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:text="@string/name"
-                android:textColor="@color/black"
                 android:textSize="20dp" />
 
             <View
@@ -72,7 +70,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="@string/surname"
-                android:textColor="@color/black"
                 android:textSize="20dp" />
 
             <View
@@ -103,7 +100,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="@string/age"
-                android:textColor="@color/black"
                 android:textSize="20dp" />
 
             <View
@@ -134,7 +130,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="@string/city"
-                android:textColor="@color/black"
                 android:textSize="20dp" />
 
             <View
