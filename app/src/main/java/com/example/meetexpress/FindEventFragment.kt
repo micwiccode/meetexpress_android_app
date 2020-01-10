@@ -68,7 +68,8 @@ class FindEventFragment : Fragment() {
         recyclerView = layout.findViewById(R.id.recycleView)
         recyclerView.layoutManager =
             LinearLayoutManager(activity?.applicationContext, RecyclerView.VERTICAL, false)
-        fetch()
+        val query = db.collection("events").orderBy("name", Query.Direction.ASCENDING)
+        fetch(query)
 
         return layout
     }
@@ -92,9 +93,7 @@ class FindEventFragment : Fragment() {
         return eventsList
     }
 
-    private fun fetch() {
-        val query = db.collection("events").orderBy("name", Query.Direction.ASCENDING)
-
+    private fun fetch(query: Query) {
         val options = FirestoreRecyclerOptions.Builder<Event>()
             .setQuery(
                 query, Event::class.java)
@@ -141,24 +140,42 @@ class FindEventFragment : Fragment() {
 
         search.setOnClickListener{
             val searchName = view.findViewById<EditText>(R.id.search_view).text.toString()
-            sportCheckBox.setOnCheckedChangeListener { cb_sport, isChecked ->
-                // cos
+            val categories: ArrayList<String> = ArrayList()
+            if (sportCheckBox.isChecked) categories.add("Sport")
+            if (cultureCheckBox.isChecked) categories.add("Culture")
+            if (partyCheckBox.isChecked) categories.add("Party")
+            if (educationCheckBox.isChecked) categories.add("Education")
+            if (esportCheckBox.isChecked) categories.add("E-sport")
+//            sportCheckBox.setOnCheckedChangeListener { cb_sport, isChecked ->
+//                // cos
+//            }
+//            cultureCheckBox.setOnCheckedChangeListener { cb_culture, isChecked ->
+//                // cos
+//            }
+//            educationCheckBox.setOnCheckedChangeListener { cb_education, isChecked ->
+//                // cos
+//            }
+//            esportCheckBox.setOnCheckedChangeListener { cb_esport, isChecked ->
+//                // cos
+//            }
+//            partyCheckBox.setOnCheckedChangeListener { cb_party, isChecked ->
+//                // cos
+//            }
+//            nearbySwitch.setOnCheckedChangeListener { switch_nearby, isChecked ->
+//                // cos
+//            }
+            var query = db.collection("events").orderBy("name", Query.Direction.ASCENDING)
+            if(searchName!=""){
+                query = query.whereGreaterThanOrEqualTo("name", searchName)
+
             }
-            cultureCheckBox.setOnCheckedChangeListener { cb_culture, isChecked ->
-                // cos
+            if(categories.isNotEmpty()){
+                query = query.whereIn("category", categories)
             }
-            educationCheckBox.setOnCheckedChangeListener { cb_education, isChecked ->
-                // cos
-            }
-            esportCheckBox.setOnCheckedChangeListener { cb_esport, isChecked ->
-                // cos
-            }
-            partyCheckBox.setOnCheckedChangeListener { cb_party, isChecked ->
-                // cos
-            }
-            nearbySwitch.setOnCheckedChangeListener { switch_nearby, isChecked ->
-                // cos
-            }
+
+            adapter.stopListening()
+            fetch(query)
+            adapter.startListening()
             dialog.dismiss()
         }
     }

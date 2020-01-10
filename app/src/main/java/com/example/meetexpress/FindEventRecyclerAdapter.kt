@@ -112,7 +112,7 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
         val cardMembersActual: TextView = itemView.findViewById(R.id.cardMembersActual)
         val cardMembersMax: TextView = itemView.findViewById(R.id.cardMembersMax)
         val cardCategory: TextView = itemView.findViewById(R.id.cardCategory)
-        val cardImage = itemView.findViewById<ImageView>(R.id.cardImage)
+        val cardImage: ImageView = itemView.findViewById(R.id.cardImage)
         val cardDate: TextView = itemView.findViewById(R.id.cardDate)
         val cardAddress: TextView = itemView.findViewById(R.id.cardAddress)
         val takePartBTN: Button = itemView.findViewById(R.id.takePartButton)
