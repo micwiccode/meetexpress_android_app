@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.dialog_search.*
-import kotlinx.android.synthetic.main.fragment_create_event.*
+import kotlinx.android.synthetic.main.fragment_find_event.*
 import java.text.SimpleDateFormat
 
 
@@ -41,6 +41,7 @@ class FindEventFragment : Fragment() {
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: FindEventRecyclerAdapter
     private lateinit var auth: FirebaseAuth
+    lateinit var navBtn: ImageButton
 
 
     override fun onCreateView(
@@ -54,8 +55,12 @@ class FindEventFragment : Fragment() {
             openSearchDialog()
         }
 
-        val navBtn = layout.findViewById<ImageButton>(R.id.nav_btn)
+        navBtn = layout.findViewById(R.id.nav_btn)
+
+        if((this.activity as MenuActivity).dark) navBtn.setBackgroundResource(R.drawable.ic_menu_white_24dp)
+
         auth = FirebaseAuth.getInstance()
+
         navBtn.setOnClickListener{
             (activity as MenuActivity).openDrawer()
         }

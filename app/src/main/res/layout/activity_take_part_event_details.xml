@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
     android:weightSum="100">
 
@@ -34,8 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="@string/defaultTitle"
-                android:textColor="@color/black" />
+                android:text="@string/defaultTitle" />
 
             <TextView
                 android:id="@+id/category"
@@ -46,7 +44,6 @@
                 android:layout_marginEnd="4dp"
                 android:gravity="end"
                 android:text="@string/defaultCategory"
-                android:textColor="@color/black"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -69,7 +66,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/defaultDate"
-                android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
@@ -78,7 +74,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/defaultTime"
-                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_marginStart="20dp"/>
 
@@ -102,7 +97,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/defaultPlace"
-                android:textColor="@color/black"
                 android:textSize="14sp" />
 
 
@@ -126,7 +120,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10"
-                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <TextView
@@ -135,7 +128,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/slash"
-                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <TextView
@@ -144,7 +136,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12"
-                android:textColor="@color/black"
                 android:textSize="14sp" />
 
         </LinearLayout>

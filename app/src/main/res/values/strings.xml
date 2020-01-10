@@ -62,5 +62,28 @@
     <string name="category">Category:</string>
     <string name="modify">Modify</string>
     <string name="back">Back</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="screen">Screen</string>
+    <string name="darkTheme">Dark Theme</string>
+    <string name="sound">Sound</string>
+    <string name="vibrations">Vibrations</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="turn_sound">Turn sound</string>
+    <string name="chooseRingtone">Choose ringtone</string>
 
 </resources>
