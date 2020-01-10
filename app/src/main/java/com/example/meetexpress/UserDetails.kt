@@ -27,10 +27,17 @@ import android.app.Activity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.net.Uri
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
+import androidx.core.graphics.drawable.toBitmap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.navigation_header.*
 import java.io.FileNotFoundException
+import java.lang.Exception
 
 
 class UserDetails : AppCompatActivity() {
@@ -38,6 +45,8 @@ class UserDetails : AppCompatActivity() {
     private val RESULT_LOAD_IMG = 1
     private lateinit var auth: FirebaseAuth
     private val db = FirebaseFirestore.getInstance()
+    private var storageRef = FirebaseStorage.getInstance().reference
+    private var photoUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +61,7 @@ class UserDetails : AppCompatActivity() {
         }
 
         save.setOnClickListener {
+            setNewPhoto()
             finish()
         }
 
@@ -115,7 +125,8 @@ class UserDetails : AppCompatActivity() {
 
         if (resultCode === Activity.RESULT_OK) {
             try {
-                val imageUri = data?.getData()
+                val imageUri = data?.data
+                photoUri = imageUri
                 val imageStream = contentResolver.openInputStream(imageUri)
                 val selectedImage = RoundedBitmapDrawableFactory.create(resources, imageStream)
                 setOvalShapedPhoto(selectedImage)
@@ -141,7 +152,31 @@ class UserDetails : AppCompatActivity() {
             city.text = profile.city
             age.text = profile.age.toString()
             surname.text = profile.surname
+
+            storageRef.child("profiles/" + auth.currentUser!!.uid + ".jpg").downloadUrl
+                .addOnSuccessListener {
+                Picasso.get().load(it).resize(180, 180).centerCrop().into(profile_photo, object:
+                    Callback {
+                    override fun onSuccess() {
+                        val bitmap = profile_photo.drawable.toBitmap()
+                        val selectedImage = RoundedBitmapDrawableFactory.create(resources, bitmap)
+                        selectedImage.isCircular = true
+                        profile_photo.setImageDrawable(null)
+                        profile_photo.setImageDrawable(selectedImage)            }
+
+                    override fun onError(e: Exception?) {
+                    }
+
+                })
+            }
+
         }
 
+    }
+
+    private fun setNewPhoto() {
+        if(photoUri!=null){
+            storageRef.child("profiles/" + auth.currentUser!!.uid + ".jpg").putFile(photoUri!!)
+        }
     }
 }

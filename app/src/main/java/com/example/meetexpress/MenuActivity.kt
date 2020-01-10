@@ -10,12 +10,20 @@ import android.content.Intent
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.net.Uri
+import android.util.Log
 import android.widget.Toast
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_user_details.*
 import kotlinx.android.synthetic.main.navigation_header.*
+import java.lang.Exception
 
 
 class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
@@ -26,6 +34,9 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private var drawerLayout : DrawerLayout? = null
     private lateinit var auth: FirebaseAuth
     private val db = FirebaseFirestore.getInstance()
+    private var profile: Profile? = null
+    private var storageRef = FirebaseStorage.getInstance().reference
+    private var photoUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +51,7 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         val navigationView = findViewById<NavigationView>(R.id.nav)
         navigationView.setNavigationItemSelectedListener(this)
+        fillFromDb()
 
     }
 
@@ -73,16 +85,33 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     fun openDrawer() {
         drawerLayout?.openDrawer(nav)
-        fillFromDb()
+        user_name.text = profile!!.name
+        user.text = profile!!.name + " " + profile!!.surname
+        Picasso.get().load(photoUri).resize(85, 85).centerCrop().into(user_image, object: Callback {
+            override fun onSuccess() {
+                val bitmap = user_image.drawable.toBitmap()
+                val selectedImage = RoundedBitmapDrawableFactory.create(resources, bitmap)
+                selectedImage.isCircular = true
+                user_image.setImageDrawable(null)
+                user_image.setImageDrawable(selectedImage)            }
+
+            override fun onError(e: Exception?) {
+            }
+
+        })
+
+
     }
 
     private fun fillFromDb() {
 
         val docRef = db.collection("profiles").document(auth.currentUser!!.uid)
         docRef.get().addOnSuccessListener { documentSnapshot ->
-            val profile = documentSnapshot.toObject(Profile::class.java)
-            user_name.text = profile!!.name
-            user.text = profile.name + " " + profile.surname
+            profile = documentSnapshot.toObject(Profile::class.java)
+
+        }
+        storageRef.child("profiles/" + auth.currentUser!!.uid + ".jpg").downloadUrl.addOnSuccessListener {
+            photoUri = it
         }
     }
 }

@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_event_details.*
-import kotlinx.android.synthetic.main.dialog_modify_event.*
 import kotlinx.android.synthetic.main.fragment_create_event.*
 import kotlinx.android.synthetic.main.fragment_create_event.date_box
 import kotlinx.android.synthetic.main.fragment_create_event.time_box

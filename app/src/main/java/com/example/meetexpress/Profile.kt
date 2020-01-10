@@ -7,4 +7,5 @@ class Profile {
     var city = ""
     var hostedEvents: ArrayList<String> = ArrayList()
     var takingPartEvents: ArrayList<String> = ArrayList()
+
 }

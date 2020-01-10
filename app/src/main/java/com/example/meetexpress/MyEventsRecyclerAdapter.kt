@@ -1,6 +1,7 @@
 package com.example.meetexpress
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +11,13 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 
 class MyEventsRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
     FirestoreRecyclerAdapter<Event, MyEventsRecyclerAdapter.ViewHolder>(options) {
+    private var storageRef = FirebaseStorage.getInstance().reference
 
     override fun onBindViewHolder(
         holder: ViewHolder,
@@ -33,6 +37,37 @@ class MyEventsRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
             val intent = Intent(context, MyEventDetails::class.java)
             intent.putExtra("model", model)
             context.startActivity(intent)
+        }
+        storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_1.jpg").downloadUrl.addOnSuccessListener {
+            Log.d("XDDD", "1")
+
+            Picasso
+                .get()
+                .load(it)
+                .into(holder.cardImage)
+            Thread.sleep(100)
+//            storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_2.jpg").downloadUrl.addOnSuccessListener {it2 ->
+//                Log.d("XDDD", "2")
+//
+//                Picasso
+//                    .get()
+//                    .load(it2)
+//                    .into(holder.cardImage)
+//                storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_3.jpg").downloadUrl.addOnSuccessListener {it3 ->
+//                    Log.d("XDDD", "3")
+//
+//                    Picasso
+//                        .get()
+//                        .load(it3)
+//                        .into(holder.cardImage)
+//                }.addOnFailureListener{
+//                    Log.d("ErrorImage", it.message)
+//                }
+//            }.addOnFailureListener{
+//                Log.d("ErrorImage", it.message)
+//            }
+        }.addOnFailureListener{
+            Log.d("ErrorImage", it.message)
         }
     }
 
