@@ -96,6 +96,14 @@ class CreateEventFragment : Fragment() {
         time_box.setOnClickListener {
             showTimePicker()
         }
+
+        date_picker_btn.setOnClickListener {
+            showDatePicker()
+        }
+
+        time_picker_btn.setOnClickListener {
+            showTimePicker()
+        }
     }
 
     private fun showTimePicker() {
