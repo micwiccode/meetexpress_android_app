@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -11,7 +12,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_event_details.*
+import kotlinx.android.synthetic.main.activity_event_details.address
+import kotlinx.android.synthetic.main.activity_event_details.category
+import kotlinx.android.synthetic.main.activity_event_details.date
+import kotlinx.android.synthetic.main.activity_event_details.image
+import kotlinx.android.synthetic.main.activity_event_details.membersActual
+import kotlinx.android.synthetic.main.activity_event_details.membersMax
+import kotlinx.android.synthetic.main.activity_event_details.name
+import kotlinx.android.synthetic.main.activity_event_details.time
+import kotlinx.android.synthetic.main.activity_my_event_details.*
 import kotlinx.android.synthetic.main.fragment_create_event.*
 import kotlinx.android.synthetic.main.fragment_create_event.date_box
 import kotlinx.android.synthetic.main.fragment_create_event.time_box
@@ -28,6 +40,8 @@ class MyEventDetails: AppCompatActivity() {
     private val timeFormat = SimpleDateFormat("hh:mm")
     private val privateMode = 0
     private val prefsFileName = "prefs"
+    private var storageRef = FirebaseStorage.getInstance().reference
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +71,15 @@ class MyEventDetails: AppCompatActivity() {
             date.text = dateFormat.format(event.date)
             time.text = timeFormat.format(event.time)
             address.text = event.place
-        }
+            storageRef.child("events/" + intent.getStringExtra("eventId") + "/"+ intent.getStringExtra("eventId")+"_1.jpg").downloadUrl.addOnSuccessListener {
+                Log.d("XDDD", "1")
+
+                Picasso
+                    .get()
+                    .load(it)
+                    .into(image)
+            }
+            }
     }
 
     private fun openModifyDialog(){
@@ -68,8 +90,8 @@ class MyEventDetails: AppCompatActivity() {
         val eventName = view.findViewById<TextInputEditText>(R.id.event_name)
         val eventPlace = view.findViewById<TextInputEditText>(R.id.event_place)
         val eventMembers = view.findViewById<TextInputEditText>(R.id.event_members)
-        eventDate = view.findViewById<TextView>(R.id.event_date_text_view)
-        eventTime = view.findViewById<TextView>(R.id.event_time_text_view)
+        eventDate = view.findViewById(R.id.event_date_text_view)
+        eventTime = view.findViewById(R.id.event_time_text_view)
         val sportCheckBox = view.findViewById<RadioButton>(R.id.cb_sport)
         val cultureCheckBox = view.findViewById<RadioButton>(R.id.cb_culture)
         val educationCheckBox = view.findViewById<RadioButton>(R.id.cb_education)

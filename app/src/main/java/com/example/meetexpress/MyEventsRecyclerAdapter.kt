@@ -36,6 +36,7 @@ class MyEventsRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
         holder.cardView.setOnClickListener {
             val intent = Intent(context, MyEventDetails::class.java)
             intent.putExtra("model", model)
+            intent.putExtra("eventId", snapshots.getSnapshot(position).id)
             context.startActivity(intent)
         }
         storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_1.jpg").downloadUrl.addOnSuccessListener {
