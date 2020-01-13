@@ -77,7 +77,6 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     .replace(R.id.container, createFragment).commit()
                 if (playSound) player.start()
                 if (vibrate) vibratePhone()
-
                 return true
             }
             R.id.menu_find -> {
@@ -86,7 +85,6 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     .replace(R.id.container, findFragment).commit()
                 if (playSound) player.start()
                 if (vibrate) vibratePhone()
-
                 return true
             }
             R.id.menu_review -> {
@@ -100,12 +98,13 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.edit_account -> {
                 val i = Intent(this@MenuActivity, UserDetails::class.java)
                 startActivity(i)
-                finish()
                 return true
             }
             R.id.settings -> {
                 val i = Intent(this@MenuActivity, SettingsActivity::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(i)
+                finish()
                 return true
             }
             R.id.log_out -> {
