@@ -1,6 +1,8 @@
 package com.example.meetexpress
 
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -14,6 +16,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import android.widget.Spinner
@@ -27,6 +30,7 @@ import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.fragment_create_event.*
 import kotlinx.android.synthetic.main.fragment_create_event.view.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 import java.text.SimpleDateFormat
@@ -47,6 +51,7 @@ class CreateEventFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private var storageRef = FirebaseStorage.getInstance().reference
     private var photoUri: Uri? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -139,6 +144,9 @@ class CreateEventFragment : Fragment() {
 
     private fun addEvent() {
 
+        progress_overlay.bringToFront()
+        animateView(progress_overlay, View.VISIBLE, 0.6f, 200)
+//        this.window.attributes.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF
         val name = input_text_name.text.toString()
         val maxPeople = input_text_members.text.toString()
         val place = input_text_place.text.toString()
@@ -211,6 +219,20 @@ class CreateEventFragment : Fragment() {
                                                     photoStorageRef3.putBytes(data3)
                                                         .addOnSuccessListener {
                                                             Log.d("XD", "Trzecia git")
+                                                            animateView(progress_overlay, View.GONE, 0.0f, 200)
+                                                            input_text_name.setText("")
+                                                            input_text_members.setText("")
+                                                            input_text_place.setText("")
+                                                            photoUri = null
+                                                            btn_pick_photo.setBackgroundResource(R.drawable.ic_add_a_photo_24dp)
+                                                            btn_pick_photo.setImageBitmap(null)
+                                                            btn_pick_photo.layoutParams.height = 50
+                                                            btn_pick_photo.layoutParams.width = 50
+
+                                                            val i = Intent(context, MyEventDetails::class.java)
+                                                            i.putExtra("eventId", documentReference.id)
+                                                            i.putExtra("model" , event)
+                                                            startActivity(i)
                                                         }
                                                         .addOnFailureListener {
                                                             Log.d("XD", it.message)
@@ -237,6 +259,80 @@ class CreateEventFragment : Fragment() {
 //                            .addOnFailureListener{
 //                                Log.d("XD", it.message)
 //                            }
+                    }else{
+                        Picasso.get()
+                            .load(R.drawable.no_img)
+                            .into(object : Target {
+                                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                                }
+
+                                override fun onBitmapFailed(
+                                    e: Exception?,
+                                    errorDrawable: Drawable?
+                                ) {
+                                }
+
+                                override fun onBitmapLoaded(
+                                    bitmap: Bitmap?,
+                                    from: Picasso.LoadedFrom?
+                                ) {
+
+
+//                                    bitmap!!.height = bitmap.height/2
+//                                    bitmap.width = bitmap.width/2
+                                    val baos = ByteArrayOutputStream()
+                                    bitmap!!.compress(Bitmap.CompressFormat.JPEG, 1, baos)
+                                    val data = baos.toByteArray()
+                                    photoStorageRef1.putBytes(data)
+                                        .addOnSuccessListener {
+                                            Log.d("XD", "Pierwsza git")
+                                            val photoStorageRef2 =
+                                                storageRef.child("events/" + documentReference.id + "/" + documentReference.id + "_2.jpg")
+                                            val baos2 = ByteArrayOutputStream()
+                                            bitmap!!.compress(Bitmap.CompressFormat.JPEG, 50, baos2)
+                                            val data2 = baos2.toByteArray()
+                                            photoStorageRef2.putBytes(data2)
+                                                .addOnSuccessListener {
+                                                    Log.d("XD", "Druga git")
+                                                    val photoStorageRef3 =
+                                                        storageRef.child("events/" + documentReference.id + "/" + documentReference.id + "_3.jpg")
+                                                    val baos3 = ByteArrayOutputStream()
+                                                    bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, baos3)
+                                                    val data3 = baos3.toByteArray()
+                                                    photoStorageRef3.putBytes(data3)
+                                                        .addOnSuccessListener {
+                                                            Log.d("XD", "Trzecia git")
+                                                            animateView(progress_overlay, View.GONE, 0.0f, 200)
+                                                            input_text_name.setText("")
+                                                            input_text_members.setText("")
+                                                            input_text_place.setText("")
+                                                            photoUri = null
+                                                            btn_pick_photo.setBackgroundResource(R.drawable.ic_add_a_photo_24dp)
+                                                            btn_pick_photo.setImageBitmap(null)
+                                                            btn_pick_photo.layoutParams.height = 50
+                                                            btn_pick_photo.layoutParams.width = 50
+
+                                                            val i = Intent(context, MyEventDetails::class.java)
+                                                            i.putExtra("eventId", documentReference.id)
+                                                            i.putExtra("model" , event)
+                                                            startActivity(i)
+                                                        }
+                                                        .addOnFailureListener {
+                                                            Log.d("XD", it.message)
+                                                        }
+                                                }
+                                                .addOnFailureListener {
+                                                    Log.d("XD", it.message)
+                                                }
+                                        }
+                                        .addOnFailureListener {
+                                            Log.d("XD", it.message)
+                                        }
+
+
+                                }
+
+                            })
                     }
                     eventsCollection
                         .document(documentReference.id)
@@ -251,6 +347,7 @@ class CreateEventFragment : Fragment() {
                 .addOnFailureListener { e ->
                     Log.w("Dodawanie", "Error adding document", e)
                 }
+
 
 
         }
@@ -307,6 +404,25 @@ class CreateEventFragment : Fragment() {
         btn_pick_photo.requestLayout()
         btn_pick_photo.setImageBitmap(image)
     }
+
+    fun animateView(view: View, toVisibility: Int, toAlpha: Float, duration: Long) {
+    val show = toVisibility == View.VISIBLE;
+    if (show) {
+        view.setAlpha(0.0f)
+
+    }
+
+    view.setVisibility(View.VISIBLE);
+    view.animate()
+            .setDuration(duration)
+            .alpha(toAlpha)
+            .setListener(object : AnimatorListenerAdapter() {
+
+        override fun onAnimationEnd(animation: Animator) {
+            view.setVisibility(toVisibility)
+        }
+    })
+}
 }
 
 

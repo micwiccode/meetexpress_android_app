@@ -9,7 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
+import kotlinx.android.synthetic.main.fragment_find_event.*
+import kotlinx.android.synthetic.main.fragment_take_part_events.*
 
 class TakePartEventsFragment : Fragment() {
 
@@ -36,6 +41,26 @@ class TakePartEventsFragment : Fragment() {
 
     private fun fetch() {
         val query = db.collection("events").whereArrayContains("profiles", auth.currentUser!!.uid)
+
+        query.addSnapshotListener(object: EventListener<QuerySnapshot> {
+            override fun onEvent(p0: QuerySnapshot?, p1: FirebaseFirestoreException?) {
+                if(p0!=null){
+
+                    if(spin_kit_take_part!=null){
+                        spin_kit_take_part.visibility = View.GONE
+                    }
+                    if(p0.isEmpty){
+                        empty_take_part.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
+                    }
+                    else{
+                        empty_take_part.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+        })
 
         val options = FirestoreRecyclerOptions.Builder<Event>()
             .setQuery(

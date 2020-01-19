@@ -28,7 +28,7 @@
                     style="@style/TextAppearance.MaterialComponents.Headline5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Play football"/>
+                    />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -40,15 +40,15 @@
                         style="@style/TextAppearance.MaterialComponents.Headline6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10"
+
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/cardMembersSlash"
+                        android:id="@+id/Slash"
                         style="@style/TextAppearance.MaterialComponents.Headline6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="/"
+                        android:text=""
                         android:textSize="14sp" />
 
                     <TextView
@@ -56,7 +56,7 @@
                         style="@style/TextAppearance.MaterialComponents.Headline6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12"
+
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -70,7 +70,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="4dp"
                 android:gravity="right"
-                android:text="Sport"
+
                 android:textSize="16sp"/>
 
         </LinearLayout>
@@ -97,7 +97,7 @@
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="27.10.2019"
+
                     android:textSize="16sp"/>
 
                 <TextView
@@ -105,7 +105,7 @@
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wrocław, Wittiga 15 Street"
+
                     android:textSize="14sp" />
 
             </LinearLayout>

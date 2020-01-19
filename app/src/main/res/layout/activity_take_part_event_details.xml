@@ -151,7 +151,7 @@
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/delete_btn"
+            android:id="@+id/not_take_part_btn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginHorizontal="40dp"

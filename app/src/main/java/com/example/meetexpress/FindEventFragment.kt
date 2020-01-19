@@ -1,7 +1,8 @@
 package com.example.meetexpress
 
 
-import android.os.Build
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,22 +15,14 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.FirebaseFirestore
-import java.time.LocalDate
-import java.time.temporal.ChronoField
 import kotlin.collections.ArrayList
-import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.dialog_search.*
+import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_find_event.*
-import java.text.SimpleDateFormat
+import kotlinx.android.synthetic.main.fragment_take_part_events.*
 
 
 /**
@@ -42,6 +35,7 @@ class FindEventFragment : Fragment() {
     lateinit var adapter: FindEventRecyclerAdapter
     private lateinit var auth: FirebaseAuth
     lateinit var navBtn: ImageButton
+    lateinit var sharedPref: SharedPreferences
 
 
     override fun onCreateView(
@@ -54,6 +48,8 @@ class FindEventFragment : Fragment() {
         searchBtn.setOnClickListener {
             openSearchDialog()
         }
+        sharedPref = activity?.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE)!!
 
         navBtn = layout.findViewById(R.id.nav_btn)
 
@@ -94,6 +90,26 @@ class FindEventFragment : Fragment() {
     }
 
     private fun fetch(query: Query) {
+        query.addSnapshotListener(object: EventListener<QuerySnapshot>{
+            override fun onEvent(p0: QuerySnapshot?, p1: FirebaseFirestoreException?) {
+                if(p0!=null){
+
+                    if(spin_kit_find!=null){
+                        spin_kit_find.visibility = View.GONE
+                    }
+                    if(p0.isEmpty){
+                        empty_find.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
+                    }
+                    else{
+                        empty_find.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+        })
+
         val options = FirestoreRecyclerOptions.Builder<Event>()
             .setQuery(
                 query, Event::class.java)
@@ -133,6 +149,24 @@ class FindEventFragment : Fragment() {
         val partyCheckBox = view.findViewById<MaterialCheckBox>(R.id.cb_party)
         val nearbySwitch = view.findViewById<SwitchMaterial>(R.id.switch_nearby)
 
+
+        val categoriesOld: ArrayList<String> = getArrayPrefs()
+        view.findViewById<EditText>(R.id.search_view).setText(sharedPref.getString("searchName", "")!!)
+        if(categoriesOld.contains("Sport")){
+            sportCheckBox.isChecked = true
+        }
+        if(categoriesOld.contains("E-sport")){
+            esportCheckBox.isChecked = true
+        }
+        if(categoriesOld.contains("Culture")){
+            cultureCheckBox.isChecked = true
+        }
+        if(categoriesOld.contains("Party")){
+            partyCheckBox.isChecked = true
+        }
+        if(categoriesOld.contains("Education")){
+            educationCheckBox.isChecked = true
+        }
         builder.setView(view)
         val dialog : AlertDialog = builder.create()
         dialog.window.attributes.windowAnimations = R.style.dialogAnimation
@@ -164,20 +198,41 @@ class FindEventFragment : Fragment() {
 //            nearbySwitch.setOnCheckedChangeListener { switch_nearby, isChecked ->
 //                // cos
 //            }
+
             var query = db.collection("events").orderBy("name", Query.Direction.ASCENDING)
             if(searchName!=""){
-                query = query.whereGreaterThanOrEqualTo("name", searchName)
+                query = query.whereEqualTo("name", searchName)
 
             }
+            sharedPref.edit().putString("searchName", searchName).apply()
+
             if(categories.isNotEmpty()){
                 query = query.whereIn("category", categories)
             }
+            setArrayPrefs(categories)
+
 
             adapter.stopListening()
             fetch(query)
             adapter.startListening()
             dialog.dismiss()
         }
+    }
+    private fun setArrayPrefs(array: ArrayList<String>) {
+        val editor = sharedPref.edit()
+        editor.putInt("categories" + "_size", array.size)
+        for (i in 0 until array.size)
+            editor.putString("categories_$i", array[i])
+        editor.apply()
+    }
+
+    private fun getArrayPrefs(): ArrayList<String> {
+
+        val size = sharedPref.getInt("categories" + "_size", 0)
+        val array = ArrayList<String>(size)
+        for (i in 0 until size)
+            array.add(sharedPref.getString("categories_$i", null)!!)
+        return array
     }
 }
 

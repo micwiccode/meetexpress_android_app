@@ -112,6 +112,7 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return true
             }
         }
+
         return false
     }
 

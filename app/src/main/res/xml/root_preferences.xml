@@ -58,4 +58,13 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="Internet connection">
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="transfer"
+            app:title="Mobile data transfer save mode"/>
+    </PreferenceCategory>
+
 </PreferenceScreen>

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".FindEventFragment"
     android:id="@+id/find">
@@ -51,9 +52,25 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/empty_find"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/no_events"
+        android:textSize="30sp" />
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spin_kit_find"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/blue" />
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,8 +84,10 @@
                 android:nestedScrollingEnabled="false"
                 android:orientation="vertical"></androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
+
+
+
 
 
 </LinearLayout>

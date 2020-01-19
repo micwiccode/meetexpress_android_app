@@ -64,10 +64,10 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
-            themePref = this!!.findPreference("theme")!!
-            soundPref = this!!.findPreference("sound")!!
-            soundFilePref = this!!.findPreference("chooseRingtone")!!
-            vibrationsPref = this!!.findPreference("vibrations")!!
+            themePref = this.findPreference("theme")!!
+            soundPref = this.findPreference("sound")!!
+            soundFilePref = this.findPreference("chooseRingtone")!!
+            vibrationsPref = this.findPreference("vibrations")!!
 
             getPreferences()
 

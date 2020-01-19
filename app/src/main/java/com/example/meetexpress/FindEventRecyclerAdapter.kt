@@ -1,6 +1,8 @@
 package com.example.meetexpress
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +14,13 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.github.ybq.android.spinkit.SpinKitView
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_find_event.*
 import java.text.SimpleDateFormat
 
 class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
@@ -24,10 +29,8 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
     val db = FirebaseFirestore.getInstance()
     private var storageRef = FirebaseStorage.getInstance().reference
 
-
     var userId: String = ""
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: Event) {
-
 
         if (model.profiles.contains(userId) || model.creatorId == userId) {
             holder.itemView.visibility = View.GONE
@@ -39,7 +42,35 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
+            val context = holder.cardView.context
+            val prefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
 
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val isMetered = cm.isActiveNetworkMetered
+
+
+            val childRef =
+                if (!prefs.getBoolean("transfer", false)) {
+                    if (isMetered) {
+                        storageRef.child(
+                            "events/" + snapshots.getSnapshot(position).id + "/" + snapshots.getSnapshot(
+                                position
+                            ).id + "_1.jpg"
+                        )
+                    } else {
+                        storageRef.child(
+                            "events/" + snapshots.getSnapshot(position).id + "/" + snapshots.getSnapshot(
+                                position
+                            ).id + "_2.jpg"
+                        )
+                    }
+                } else {
+                    storageRef.child(
+                        "events/" + snapshots.getSnapshot(position).id + "/" + snapshots.getSnapshot(
+                            position
+                        ).id + "_2.jpg"
+                    )
+                }
             val dateFormat = SimpleDateFormat("dd-MM-yyyy")
             holder.cardTitle.text = model.name
             holder.cardMembersActual.text = model.actualPeople.toString()
@@ -47,43 +78,31 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
             holder.cardCategory.text = model.category
             holder.cardDate.text = dateFormat.format(model.date)
             holder.cardAddress.text = model.place
-//            holder.cardImage
-            storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_1.jpg").downloadUrl.addOnSuccessListener {
-                Log.d("XDDD", "1")
+            holder.takePartBTN.visibility = View.VISIBLE
+            holder.slash.text = "/"
+
+            holder.cardView.setOnClickListener {
+                val intent = Intent(context, FindEventDetails::class.java)
+                intent.putExtra("model", model)
+                intent.putExtra("eventId", snapshots.getSnapshot(position).id)
+                context.startActivity(intent)
+            }
+
+            childRef.downloadUrl.addOnSuccessListener {
 
                 Picasso
                     .get()
                     .load(it)
                     .into(holder.cardImage)
-                storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_2.jpg").downloadUrl.addOnSuccessListener {it2 ->
-                    Log.d("XDDD", "2")
 
-                    Picasso
-                        .get()
-                        .load(it2)
-                        .into(holder.cardImage)
-                    storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_3.jpg").downloadUrl.addOnSuccessListener {it3 ->
-                        Log.d("XDDD", "3")
 
-                        Picasso
-                            .get()
-                            .load(it3)
-                            .into(holder.cardImage)
-                    }.addOnFailureListener{
-                        Log.d("ErrorImage", it.message)
-                    }
-                }.addOnFailureListener{
-                    Log.d("ErrorImage", it.message)
-                }
-            }.addOnFailureListener{
+            }.addOnFailureListener {
                 Log.d("ErrorImage", it.message)
             }
 
-
-            holder.takePartBTN.setOnClickListener{
+            holder.takePartBTN.setOnClickListener {
                 takePart(snapshots.getSnapshot(position).id)
             }
-            val context = holder.cardView.context
             holder.cardView.setOnClickListener {
                 val intent = Intent(context, FindEventDetails::class.java)
                 intent.putExtra("model", model)
@@ -92,9 +111,10 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
         }
     }
 
-    private fun takePart(eventId: String){
+    private fun takePart(eventId: String) {
         db.collection("events").document(eventId).update("profiles", FieldValue.arrayUnion(userId))
-        db.collection("profiles").document(userId).update("hostedEvents", FieldValue.arrayUnion(eventId))
+        db.collection("profiles").document(userId)
+            .update("takingPartEvents", FieldValue.arrayUnion(eventId))
         db.collection("events").document(eventId).update("actualPeople", FieldValue.increment(1))
     }
 
@@ -116,6 +136,7 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
         val cardDate: TextView = itemView.findViewById(R.id.cardDate)
         val cardAddress: TextView = itemView.findViewById(R.id.cardAddress)
         val takePartBTN: Button = itemView.findViewById(R.id.takePartButton)
+        val slash = itemView.findViewById<TextView>(R.id.cardMembersSlash)
 
     }
 

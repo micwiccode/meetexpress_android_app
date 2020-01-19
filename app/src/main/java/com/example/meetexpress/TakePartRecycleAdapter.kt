@@ -1,6 +1,8 @@
 package com.example.meetexpress
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import java.lang.Exception
 import java.text.SimpleDateFormat
 
 class TakePartRecycleAdapter(options: FirestoreRecyclerOptions<Event>) :
@@ -39,33 +43,37 @@ class TakePartRecycleAdapter(options: FirestoreRecyclerOptions<Event>) :
             intent.putExtra("model", model)
             context.startActivity(intent)
         }
-        storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_1.jpg").downloadUrl.addOnSuccessListener {
-            Log.d("XDDD", "1")
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val isMetered = cm.isActiveNetworkMetered
+
+
+        val childRef = if(isMetered){
+            storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_1.jpg")
+        } else{
+            storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_2.jpg")
+        }
+        holder.cardTitle.text = model.name
+        holder.cardMembersActual.text = model.actualPeople.toString()
+        holder.cardMembersMax.text = model.maxPeople.toString()
+        holder.cardCategory.text = model.category
+        holder.cardDate.text = dateFormat.format(model.date)
+        holder.cardAddress.text = model.place
+        holder.cardSlash.text = "/"
+
+        holder.cardView.setOnClickListener {
+            val intent = Intent(context, TakePartEventDetails::class.java)
+            intent.putExtra("model", model)
+            intent.putExtra("eventId", snapshots.getSnapshot(position).id)
+            context.startActivity(intent)
+        }
+        childRef.downloadUrl.addOnSuccessListener {
 
             Picasso
                 .get()
                 .load(it)
                 .into(holder.cardImage)
-            storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_2.jpg").downloadUrl.addOnSuccessListener {it2 ->
-                Log.d("XDDD", "2")
 
-                Picasso
-                    .get()
-                    .load(it2)
-                    .into(holder.cardImage)
-                storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_3.jpg").downloadUrl.addOnSuccessListener {it3 ->
-                    Log.d("XDDD", "3")
 
-                    Picasso
-                        .get()
-                        .load(it3)
-                        .into(holder.cardImage)
-                }.addOnFailureListener{
-                    Log.d("ErrorImage", it.message)
-                }
-            }.addOnFailureListener{
-                Log.d("ErrorImage", it.message)
-            }
         }.addOnFailureListener{
             Log.d("ErrorImage", it.message)
         }
@@ -91,5 +99,6 @@ class TakePartRecycleAdapter(options: FirestoreRecyclerOptions<Event>) :
         val cardImage = itemView.findViewById<ImageView>(R.id.cardImage)
         val cardDate = itemView.findViewById<TextView>(R.id.cardDate)
         val cardAddress = itemView.findViewById<TextView>(R.id.cardAddress)
+        val cardSlash = itemView.findViewById<TextView>(R.id.Slash)
     }
 }

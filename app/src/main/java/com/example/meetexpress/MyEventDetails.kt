@@ -2,7 +2,9 @@ package com.example.meetexpress
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +14,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_event_details.*
@@ -41,6 +46,11 @@ class MyEventDetails: AppCompatActivity() {
     private val privateMode = 0
     private val prefsFileName = "prefs"
     private var storageRef = FirebaseStorage.getInstance().reference
+    private var eventId: String = ""
+    private val db = FirebaseFirestore.getInstance()
+    private lateinit var auth: FirebaseAuth
+
+
 
 
 
@@ -53,12 +63,28 @@ class MyEventDetails: AppCompatActivity() {
         setContentView(R.layout.activity_my_event_details)
 
         getIncomingIntent()
+        auth = FirebaseAuth.getInstance()
 
         val modifyBtn = findViewById<MaterialButton>(R.id.modify_btn)
 
         modifyBtn.setOnClickListener {
             openModifyDialog()
         }
+        delete_btn.setOnClickListener {
+            deleteEvent()
+        }
+    }
+
+    private fun deleteEvent(){
+        db.collection("events").document(eventId).delete()
+            .addOnSuccessListener {  }
+            .addOnFailureListener {  }
+        db.collection("profiles").document()
+            .update("takingPartEvents", FieldValue.arrayRemove(eventId))
+        db.collection("profiles").document(auth.currentUser!!.uid)
+            .update("hostedEvents", FieldValue.arrayRemove(eventId))
+        Toast.makeText(this, "Event has been successfully deleted" , Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     private fun getIncomingIntent(){
@@ -71,7 +97,28 @@ class MyEventDetails: AppCompatActivity() {
             date.text = dateFormat.format(event.date)
             time.text = timeFormat.format(event.time)
             address.text = event.place
-            storageRef.child("events/" + intent.getStringExtra("eventId") + "/"+ intent.getStringExtra("eventId")+"_1.jpg").downloadUrl.addOnSuccessListener {
+            eventId = intent.getStringExtra("eventId")!!
+            val prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+            val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val isMetered = cm.isActiveNetworkMetered
+
+            val childRef =
+                if (!prefs.getBoolean("transfer", false)) {
+                    if (isMetered) {
+                        storageRef.child(
+                            "events/" + intent.getStringExtra("eventId") + "/"+ intent.getStringExtra("eventId")+"_1.jpg"
+                        )
+                    } else {
+                        storageRef.child(
+                            "events/" + intent.getStringExtra("eventId") + "/"+ intent.getStringExtra("eventId")+"_2.jpg"
+                        )
+                    }
+                } else {
+                    storageRef.child(
+                        "events/" + intent.getStringExtra("eventId") + "/"+ intent.getStringExtra("eventId")+"_2.jpg"
+                    )
+                }
+            childRef.downloadUrl.addOnSuccessListener {
                 Log.d("XDDD", "1")
 
                 Picasso
@@ -126,6 +173,26 @@ class MyEventDetails: AppCompatActivity() {
         dialog.show()
 
         save.setOnClickListener{
+            var category = if(sportCheckBox.isChecked) "Sport"
+            else {
+                if(cultureCheckBox.isChecked) "Culture"
+                else{
+                    if(educationCheckBox.isChecked) "Education"
+                    else{
+                        if(partyCheckBox.isChecked) "Party"
+                        else
+                            "E-sport"
+                    }
+                }
+            }
+            db.collection("events").document(eventId).update(mapOf(
+                "category" to category,
+                "maxPeople" to eventMembers.text.toString().toInt(),
+                "name" to eventName.text.toString(),
+                "place" to eventPlace.text.toString(),
+                "date" to dateFormat.parse(eventDate.text.toString()).time,
+                "time" to timeFormat.parse(eventTime.text.toString()).time
+            ))
             dialog.dismiss()
         }
 
@@ -145,6 +212,8 @@ class MyEventDetails: AppCompatActivity() {
                 SimpleDateFormat("hh").format(event.time).toInt(),
                 SimpleDateFormat("mm").format(event.time).toInt())
         }
+        Toast.makeText(this, "Even has beed successfully modified", Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     private fun showTimePicker(hour:Int, minute: Int) {

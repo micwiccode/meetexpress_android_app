@@ -19,6 +19,7 @@
     <string name="my_events">My events</string>
     <string name="number_of_members">Number of members</string>
     <string name="place">Place</string>
+    <string name="preference_file_key">prefs</string>
 
     <string-array name="categories">
         <item>Sport</item>
@@ -85,5 +86,6 @@
     <string name="vibrate">Vibrate</string>
     <string name="turn_sound">Turn sound</string>
     <string name="chooseRingtone">Choose ringtone</string>
+    <string name="no_events">No events</string>
 
 </resources>
