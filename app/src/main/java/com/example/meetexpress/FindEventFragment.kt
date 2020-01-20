@@ -98,11 +98,15 @@ class FindEventFragment : Fragment() {
                         spin_kit_find.visibility = View.GONE
                     }
                     if(p0.isEmpty){
-                        empty_find.visibility = View.VISIBLE
+                        if(empty_find!=null){
+                            empty_find.visibility = View.VISIBLE
+                        }
                         recyclerView.visibility = View.GONE
                     }
                     else{
-                        empty_find.visibility = View.GONE
+                        if(empty_find!=null){
+                            empty_find.visibility = View.GONE
+                        }
                         recyclerView.visibility = View.VISIBLE
                     }
                 }

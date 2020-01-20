@@ -50,11 +50,15 @@ class TakePartEventsFragment : Fragment() {
                         spin_kit_take_part.visibility = View.GONE
                     }
                     if(p0.isEmpty){
-                        empty_take_part.visibility = View.VISIBLE
+                        if(empty_take_part!=null){
+                            empty_take_part.visibility = View.VISIBLE
+                        }
                         recyclerView.visibility = View.GONE
                     }
                     else{
-                        empty_take_part.visibility = View.GONE
+                        if(empty_take_part!=null){
+                            empty_take_part.visibility = View.GONE
+                        }
                         recyclerView.visibility = View.VISIBLE
                     }
                 }

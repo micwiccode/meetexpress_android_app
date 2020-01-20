@@ -49,11 +49,15 @@ class MyEventsFragment : Fragment() {
                         spin_kit_my_event.visibility = View.GONE
                     }
                     if(p0.isEmpty){
-                        empty_my.visibility = View.VISIBLE
+                        if(empty_my!=null){
+                            empty_my.visibility = View.VISIBLE
+                        }
                         recyclerView.visibility = View.GONE
                     }
                     else{
-                        empty_my.visibility = View.GONE
+                        if(empty_my!=null){
+                            empty_my.visibility = View.GONE
+                        }
                         recyclerView.visibility = View.VISIBLE
                     }
                 }

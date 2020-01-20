@@ -194,6 +194,8 @@ class MyEventDetails: AppCompatActivity() {
                 "time" to timeFormat.parse(eventTime.text.toString()).time
             ))
             dialog.dismiss()
+            Toast.makeText(this, "Even has beed successfully modified", Toast.LENGTH_SHORT).show()
+            finish()
         }
 
         back.setOnClickListener{
@@ -212,8 +214,6 @@ class MyEventDetails: AppCompatActivity() {
                 SimpleDateFormat("hh").format(event.time).toInt(),
                 SimpleDateFormat("mm").format(event.time).toInt())
         }
-        Toast.makeText(this, "Even has beed successfully modified", Toast.LENGTH_SHORT).show()
-        finish()
     }
 
     private fun showTimePicker(hour:Int, minute: Int) {

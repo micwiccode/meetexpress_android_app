@@ -38,11 +38,6 @@ class TakePartRecycleAdapter(options: FirestoreRecyclerOptions<Event>) :
         holder.cardAddress.text = model.place
 
         val context = holder.cardView.context
-        holder.cardView.setOnClickListener {
-            val intent = Intent(context, TakePartEventDetails::class.java)
-            intent.putExtra("model", model)
-            context.startActivity(intent)
-        }
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val isMetered = cm.isActiveNetworkMetered
 

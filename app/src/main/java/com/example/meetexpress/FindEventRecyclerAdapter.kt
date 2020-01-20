@@ -103,11 +103,6 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
             holder.takePartBTN.setOnClickListener {
                 takePart(snapshots.getSnapshot(position).id)
             }
-            holder.cardView.setOnClickListener {
-                val intent = Intent(context, FindEventDetails::class.java)
-                intent.putExtra("model", model)
-                context.startActivity(intent)
-            }
         }
     }
 
