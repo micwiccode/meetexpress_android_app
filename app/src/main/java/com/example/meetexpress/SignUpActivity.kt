@@ -19,12 +19,12 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private val db = FirebaseFirestore.getInstance()
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-
+        db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
         nextButton.setOnClickListener {
@@ -104,7 +104,7 @@ class SignUpActivity : AppCompatActivity() {
             } else return false
         }
 
-        private fun validateNextStep(
+        public fun validateNextStep(
             name: String,
             surname: String,
             age: String,
@@ -143,7 +143,7 @@ class SignUpActivity : AppCompatActivity() {
             return isValid
         }
 
-        private fun validateFirstStep(
+        public fun validateFirstStep(
             email: String,
             password: String,
             repeatPassword: String
@@ -165,17 +165,16 @@ class SignUpActivity : AppCompatActivity() {
             else{
                 passwordLayout.error = null
             }
-            if (repeatPassword.trim().length < 6) {
-                repeatPasswordLayout.error = "Please enter password (at least 6 characters)"
-                isValid = false
-            }
-            else{
-                repeatPasswordLayout.error = null
-            }
+//            if (repeatPassword.trim().length < 6) {
+//                passwordLayout.error = "Please enter password (at least 6 characters)"
+//                isValid = false
+//            }
+//            else{
+//                repeatPasswordLayout.error = null
+//            }
             if(!(password.trim().length < 6 && repeatPassword.trim().length < 6)){
                 if (password != repeatPassword) {
                     passwordLayout.error = "Passwords are not the same"
-                    repeatPasswordLayout.error = "Passwords are not the same"
                     isValid = false
                 }
                 else{
