@@ -40,8 +40,8 @@ class LogInActivity : AppCompatActivity() {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("signIn", "signInWithEmail:success")
                         val user = mAuth.currentUser
-
                         val intent = Intent(this, MenuActivity::class.java)
+                        finish()
                         // start your next activity
                         startActivity(intent)
                     } else {

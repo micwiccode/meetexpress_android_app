@@ -34,6 +34,7 @@ class SignUpActivity : AppCompatActivity() {
                 btn_sign_up_confirm.setOnClickListener {
                     if (fillProfileData()) {
                         val intent = Intent(this, MenuActivity::class.java)
+                        finish()
                         startActivity(intent)
                     }
                 }

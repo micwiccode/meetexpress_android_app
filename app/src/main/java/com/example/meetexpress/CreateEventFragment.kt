@@ -17,10 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.ArrayAdapter
-import android.widget.ImageButton
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -64,13 +61,6 @@ class CreateEventFragment : Fragment() {
         navBtn.setOnClickListener {
             (activity as MenuActivity).openDrawer()
         }
-
-        val spinner = layout.findViewById<Spinner>(R.id.categories_spinner)
-        spinner.adapter = ArrayAdapter.createFromResource(
-            activity!!.applicationContext,
-            R.array.categories,
-            android.R.layout.simple_spinner_dropdown_item
-        )
 
         layout.btn_create.setOnClickListener {
             addEvent()
@@ -144,19 +134,22 @@ class CreateEventFragment : Fragment() {
 
     private fun addEvent() {
 
-        progress_overlay.bringToFront()
-        animateView(progress_overlay, View.VISIBLE, 0.6f, 200)
-//        this.window.attributes.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF
         val name = input_text_name.text.toString()
         val maxPeople = input_text_members.text.toString()
         val place = input_text_place.text.toString()
         val dateFormat = SimpleDateFormat("dd-MM-yyyy")
         val date = dateFormat.parse(date_text_view.text.toString()).time
-        val timeFormat = SimpleDateFormat("hh:mm")
+        val timeFormat = SimpleDateFormat("HH:mm")
         val time = timeFormat.parse(time_text_view.text.toString()).time
-        val category = categories_spinner.selectedItem.toString()
+
+        val radioButtonID = radio_group.checkedRadioButtonId
+        val radioButton = radio_group.findViewById<RadioButton>(radioButtonID)
+        val category = radioButton.text.toString()
 
         if (validate(name, maxPeople, place)) {
+
+            progress_overlay.bringToFront()
+            animateView(progress_overlay, View.VISIBLE, 0.6f, 200)
 
             val event = Event(
                 name,
@@ -328,10 +321,7 @@ class CreateEventFragment : Fragment() {
                                         .addOnFailureListener {
                                             Log.d("XD", it.message)
                                         }
-
-
                                 }
-
                             })
                     }
                     eventsCollection
@@ -348,9 +338,14 @@ class CreateEventFragment : Fragment() {
                     Log.w("Dodawanie", "Error adding document", e)
                 }
 
-
-
+            input_text_name.text?.clear()
+            input_text_members.text?.clear()
+            input_text_place.text?.clear()
+            input_text_name.error = null
+            input_text_members.error = null
+            input_text_place.error = null
         }
+
     }
 
     private fun validate(name: String, maxPeople: String, place: String): Boolean {

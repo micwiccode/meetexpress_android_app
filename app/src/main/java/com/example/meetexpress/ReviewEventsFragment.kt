@@ -60,7 +60,7 @@ class ReviewEventsFragment : Fragment() {
 
 //        val eventsList = ArrayList<Event>()
 //        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
-//        val timeFormat =  SimpleDateFormat("hh:mm")
+//        val timeFormat =  SimpleDateFormat("HH:mm")
 //        var date = dateFormat.parse("10-11-2019").time
 //        var time = timeFormat.parse("11:00").time
 //        eventsList.add(Event("Play football", date, time,0,12,"Wrocław, Wittiga 15 Street", "Sport", R.drawable.sport_image))

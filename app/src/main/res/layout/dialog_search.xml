@@ -30,7 +30,6 @@
         android:layout_height="wrap_content"
         android:text="Sport" />
 
-
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/cb_party"
         android:layout_width="wrap_content"
@@ -54,13 +53,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="E-sport" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_nearby"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/nearby" />
 
     <Button
         android:id="@+id/search"

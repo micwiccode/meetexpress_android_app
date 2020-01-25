@@ -151,8 +151,6 @@ class FindEventFragment : Fragment() {
         val educationCheckBox = view.findViewById<MaterialCheckBox>(R.id.cb_education)
         val esportCheckBox = view.findViewById<MaterialCheckBox>(R.id.cb_esport)
         val partyCheckBox = view.findViewById<MaterialCheckBox>(R.id.cb_party)
-        val nearbySwitch = view.findViewById<SwitchMaterial>(R.id.switch_nearby)
-
 
         val categoriesOld: ArrayList<String> = getArrayPrefs()
         view.findViewById<EditText>(R.id.search_view).setText(sharedPref.getString("searchName", "")!!)
@@ -184,25 +182,6 @@ class FindEventFragment : Fragment() {
             if (partyCheckBox.isChecked) categories.add("Party")
             if (educationCheckBox.isChecked) categories.add("Education")
             if (esportCheckBox.isChecked) categories.add("E-sport")
-//            sportCheckBox.setOnCheckedChangeListener { cb_sport, isChecked ->
-//                // cos
-//            }
-//            cultureCheckBox.setOnCheckedChangeListener { cb_culture, isChecked ->
-//                // cos
-//            }
-//            educationCheckBox.setOnCheckedChangeListener { cb_education, isChecked ->
-//                // cos
-//            }
-//            esportCheckBox.setOnCheckedChangeListener { cb_esport, isChecked ->
-//                // cos
-//            }
-//            partyCheckBox.setOnCheckedChangeListener { cb_party, isChecked ->
-//                // cos
-//            }
-//            nearbySwitch.setOnCheckedChangeListener { switch_nearby, isChecked ->
-//                // cos
-//            }
-
             var query = db.collection("events").orderBy("name", Query.Direction.ASCENDING)
             if(searchName!=""){
                 query = query.whereEqualTo("name", searchName)

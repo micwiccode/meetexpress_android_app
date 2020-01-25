@@ -4,30 +4,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import android.graphics.BitmapFactory
-import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_user_details.*
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.dialog.*
-import kotlinx.android.synthetic.main.fragment_create_event.*
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.widget.Toast
-import android.graphics.Bitmap
-import android.R.attr.data
 import android.app.Activity
 import android.content.SharedPreferences
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.net.Uri
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.toBitmap
@@ -36,7 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.navigation_header.*
 import java.io.FileNotFoundException
 import java.lang.Exception
 
@@ -73,13 +58,16 @@ class UserDetails : AppCompatActivity() {
         }
 
         val editButtons= arrayOf(name_edit, surname_edit, age_edit, city_edit)
-        editButtons.forEachIndexed { index, btn -> btn.setOnClickListener{ openDialog(index) }}
+        editButtons.forEachIndexed { index, btn -> btn.setOnClickListener{ openDialogText(index) }}
     }
 
-    private fun openDialog(index :Int) {
+    private fun openDialogText(index :Int) {
 
         val builder : AlertDialog.Builder = AlertDialog.Builder(this)
-        val view : View = LayoutInflater.from(this).inflate(R.layout.dialog, null)
+        var view : View = LayoutInflater.from(this).inflate(R.layout.dialog_text, null)
+        if(index == 2) {
+            view = LayoutInflater.from(this).inflate(R.layout.dialog_number, null)
+        }
         val confirm = view.findViewById<Button>(R.id.confirm)
         builder.setView(view)
         val dialog : AlertDialog = builder.create()

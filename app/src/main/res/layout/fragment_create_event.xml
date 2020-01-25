@@ -51,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="90dp"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="30dp">
@@ -180,19 +181,46 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <Spinner
-                android:id="@+id/categories_spinner"
+            
+            <RadioGroup
+                android:id="@+id/radio_group"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/dropdownListPreferredItemHeight"
+                android:layout_height="wrap_content"
+                android:gravity="center">
 
-                android:background="@drawable/spinner_back"
-                android:dropDownWidth="300dp"
-                android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
-                android:paddingRight="5dp"
-                android:popupBackground="@color/blue"
-                android:popupElevation="1dp"
-                android:stateListAnimator="@drawable/spinner_animation" />
+                <RadioButton
+                    android:id="@+id/rb_sport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Sport" />
+
+                <RadioButton
+                    android:id="@+id/rb_party"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Party"/>
+
+                <RadioButton
+                    android:id="@+id/rb_education"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Education"/>
+
+                <RadioButton
+                    android:id="@+id/rb_culture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Culture"/>
+
+                <RadioButton
+                    android:id="@+id/rb_esport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="E-sport" />
+
+            </RadioGroup>
+
 
             <ImageButton
                 android:id="@+id/btn_pick_photo"
@@ -209,7 +237,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
-                android:layout_marginBottom="10dp"
                 android:text="@string/create_event"
                 android:textColor="@color/white" />
 

@@ -42,7 +42,7 @@ class MyEventDetails: AppCompatActivity() {
     private lateinit var eventDate : TextView
     private lateinit var eventTime : TextView
     private val dateFormat = SimpleDateFormat("dd-MM-yyyy")
-    private val timeFormat = SimpleDateFormat("hh:mm")
+    private val timeFormat = SimpleDateFormat("HH:mm")
     private val privateMode = 0
     private val prefsFileName = "prefs"
     private var storageRef = FirebaseStorage.getInstance().reference
@@ -211,7 +211,7 @@ class MyEventDetails: AppCompatActivity() {
 
         timeBox.setOnClickListener {
             showTimePicker(
-                SimpleDateFormat("hh").format(event.time).toInt(),
+                SimpleDateFormat("HH").format(event.time).toInt(),
                 SimpleDateFormat("mm").format(event.time).toInt())
         }
     }

@@ -3,16 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MyEventsFragment">
-    <TextView
-        android:id="@+id/empty_my"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_gravity="center_horizontal"
-
-        android:text="@string/no_events" />
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/spin_kit_my_event"
@@ -21,6 +14,32 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:SpinKit_Color="@color/blue" />
+
+    <LinearLayout
+        android:id="@+id/empty_my"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:textAlignment="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ic_sentiment_dissatisfied_black_24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/no_events"
+            android:textColor="#555"
+            android:fontFamily="casual"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

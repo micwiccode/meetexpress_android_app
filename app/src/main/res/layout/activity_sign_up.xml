@@ -53,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -80,6 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -107,6 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="16sp" />
 

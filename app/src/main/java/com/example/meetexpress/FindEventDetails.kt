@@ -46,7 +46,7 @@ class FindEventDetails : AppCompatActivity() {
         if (intent.hasExtra("model")) {
             val event: Event = intent.getSerializableExtra("model") as Event
             val dateFormat = SimpleDateFormat("dd-MM-yyyy")
-            val timeFormat = SimpleDateFormat("hh:mm")
+            val timeFormat = SimpleDateFormat("HH:mm")
             name.text = event.name
             membersActual.text = event.actualPeople.toString()
             membersMax.text = event.maxPeople.toString()

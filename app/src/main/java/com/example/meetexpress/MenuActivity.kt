@@ -48,6 +48,7 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private var playSound = false
     private lateinit var player: MediaPlayer
     private var vibrate = false
+    private var backPressedTime = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         readValuesFromStorage()
@@ -60,7 +61,7 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
         bottomNavigationView.setOnNavigationItemSelectedListener(this)
-        bottomNavigationView.selectedItemId = R.id.menu_create
+        bottomNavigationView.selectedItemId = R.id.menu_find
 
         val navigationView = findViewById<NavigationView>(R.id.nav)
         navigationView.setNavigationItemSelectedListener(this)
@@ -204,5 +205,17 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         } else {
             vibrations.vibrate(200)
         }
+    }
+
+    override fun onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()){
+            super.onBackPressed()
+            return
+        }
+        else{
+            Toast.makeText(this,
+                "Press back again to exit", Toast.LENGTH_SHORT).show()
+        }
+        backPressedTime = System.currentTimeMillis()
     }
 }
