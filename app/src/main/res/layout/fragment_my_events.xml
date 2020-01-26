@@ -4,16 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MyEventsFragment">
-
-    <com.github.ybq.android.spinkit.SpinKitView
-        android:id="@+id/spin_kit_my_event"
-        style="@style/SpinKitView.Large.Circle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:SpinKit_Color="@color/blue" />
 
     <LinearLayout
         android:id="@+id/empty_my"
@@ -37,8 +30,16 @@
             android:textColor="#555"
             android:fontFamily="casual"
             android:textSize="30sp" />
-
     </LinearLayout>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spin_kit_my_event"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/blue" />
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

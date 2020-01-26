@@ -87,5 +87,7 @@
     <string name="turn_sound">Turn sound</string>
     <string name="chooseRingtone">Choose ringtone</string>
     <string name="no_events">No events</string>
+    <string name="change_category">Change category</string>
+    <string name="select_category_of_your_event">Select category of your event:</string>
 
 </resources>

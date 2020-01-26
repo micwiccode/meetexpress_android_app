@@ -3,17 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".TakePartEventsFragment">
-
-    <com.github.ybq.android.spinkit.SpinKitView
-        android:id="@+id/spin_kit_take_part"
-        style="@style/SpinKitView.Large.Circle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:SpinKit_Color="@color/blue" />
-
 
     <LinearLayout
         android:id="@+id/empty_take_part"
@@ -39,6 +31,14 @@
             android:textSize="30sp" />
 
     </LinearLayout>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spin_kit_take_part"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/blue" />
 
 
     <androidx.core.widget.NestedScrollView

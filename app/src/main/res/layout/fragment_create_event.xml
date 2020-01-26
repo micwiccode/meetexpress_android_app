@@ -39,6 +39,7 @@
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -181,46 +182,13 @@
                 </LinearLayout>
 
             </LinearLayout>
-            
-            <RadioGroup
-                android:id="@+id/radio_group"
-                android:layout_width="match_parent"
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_category"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <RadioButton
-                    android:id="@+id/rb_sport"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="Sport" />
-
-                <RadioButton
-                    android:id="@+id/rb_party"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Party"/>
-
-                <RadioButton
-                    android:id="@+id/rb_education"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Education"/>
-
-                <RadioButton
-                    android:id="@+id/rb_culture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Culture"/>
-
-                <RadioButton
-                    android:id="@+id/rb_esport"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="E-sport" />
-
-            </RadioGroup>
-
+                android:text="@string/change_category"
+                android:textColor="@color/white" />
 
             <ImageButton
                 android:id="@+id/btn_pick_photo"

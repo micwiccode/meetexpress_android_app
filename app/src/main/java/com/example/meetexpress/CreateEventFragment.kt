@@ -18,13 +18,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
+import kotlinx.android.synthetic.main.dialog_categories.view.*
 import kotlinx.android.synthetic.main.fragment_create_event.*
 import kotlinx.android.synthetic.main.fragment_create_event.view.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
@@ -48,6 +52,7 @@ class CreateEventFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private var storageRef = FirebaseStorage.getInstance().reference
     private var photoUri: Uri? = null
+    private var category = "Sport"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +66,10 @@ class CreateEventFragment : Fragment() {
         navBtn.setOnClickListener {
             (activity as MenuActivity).openDrawer()
         }
-
+        layout.btn_category.text = "Category: $category"
+        layout.btn_category.setOnClickListener {
+            openCategoryDialog()
+        }
         layout.btn_create.setOnClickListener {
             addEvent()
         }
@@ -98,6 +106,33 @@ class CreateEventFragment : Fragment() {
 
         time_picker_btn.setOnClickListener {
             showTimePicker()
+        }
+    }
+
+    private fun openCategoryDialog() {
+
+        val builder : AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        val view : View = LayoutInflater.from(activity).inflate(R.layout.dialog_categories, null)
+
+        val radioGroup = view.findViewById<RadioGroup>(R.id.radio_group)
+        val radioButtons = listOf(view.rb_sport, view.rb_culture, view.rb_esport, view.rb_party, view.rb_education)
+
+        for (rb in radioButtons){
+            rb.isChecked = rb.text == category
+        }
+        builder.setView(view)
+        val dialog : AlertDialog = builder.create()
+        dialog.window.attributes.windowAnimations = R.style.dialogAnimation
+        dialog.show()
+
+        for (rb in radioButtons){
+            rb.setOnClickListener{
+                val radioButtonID = radioGroup.checkedRadioButtonId
+                val radioButton = radioGroup.findViewById<RadioButton>(radioButtonID)
+                category = radioButton.text.toString()
+                btn_category.text = "Category: $category"
+                dialog.dismiss()
+            }
         }
     }
 
@@ -141,10 +176,6 @@ class CreateEventFragment : Fragment() {
         val date = dateFormat.parse(date_text_view.text.toString()).time
         val timeFormat = SimpleDateFormat("HH:mm")
         val time = timeFormat.parse(time_text_view.text.toString()).time
-
-        val radioButtonID = radio_group.checkedRadioButtonId
-        val radioButton = radio_group.findViewById<RadioButton>(radioButtonID)
-        val category = radioButton.text.toString()
 
         if (validate(name, maxPeople, place)) {
 
