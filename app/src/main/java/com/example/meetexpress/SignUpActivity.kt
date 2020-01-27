@@ -131,9 +131,12 @@ class SignUpActivity : AppCompatActivity() {
                 ageLayout.error = "Please enter age"
                 isValid = false
             }
-            else{
-                ageLayout.error = null
-            }
+            else if(age.trim().length > 2){
+                ageLayout.error = "Please enter a valid age"
+                isValid = false
+                }
+            else ageLayout.error = null
+
             if (city.isEmpty()) {
                 cityLayout.error = "Please enter city"
                 isValid = false

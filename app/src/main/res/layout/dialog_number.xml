@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/blue"
             android:maxLines="1"
+            android:maxLength="2"
             android:inputType="number"
             android:textSize="12sp" />
 
