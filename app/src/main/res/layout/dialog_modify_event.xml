@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -31,9 +32,9 @@
                     android:id="@+id/event_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/blue"
-                    android:maxLines="1"
                     android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/blue"
                     android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -54,8 +55,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:textColor="@color/blue"
                     android:maxLines="1"
+                    android:textColor="@color/blue"
                     android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -76,9 +77,9 @@
                     android:id="@+id/event_place"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/blue"
-                    android:maxLines="1"
                     android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/blue"
                     android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -172,13 +173,13 @@
                     android:id="@+id/cb_culture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Culture"/>
+                    android:text="Culture" />
 
                 <RadioButton
                     android:id="@+id/cb_esport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="E-sport"/>
+                    android:text="E-sport" />
             </RadioGroup>
 
 
@@ -186,27 +187,27 @@
                 android:id="@+id/save_btn"
                 android:layout_width="150dp"
                 android:layout_height="60dp"
+                android:layout_gravity="center"
                 android:layout_marginEnd="5dp"
                 android:padding="10dp"
                 android:text="@string/save"
                 android:textColor="@color/white"
                 app:icon="@drawable/ic_edit_black_24dp"
-                app:iconTint="@color/white"
-                android:layout_gravity="center"/>
+                app:iconTint="@color/white" />
 
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/back_btn"
                 android:layout_width="150dp"
                 android:layout_height="60dp"
+                android:layout_gravity="center"
                 android:layout_marginEnd="4dp"
+                android:layout_marginBottom="20dp"
                 android:padding="10dp"
                 android:text="@string/back"
                 android:textColor="@color/white"
                 app:icon="@drawable/ic_delete_forever_24dp"
-                app:iconTint="@color/white"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"/>
+                app:iconTint="@color/white" />
 
         </LinearLayout>
 

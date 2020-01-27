@@ -2,6 +2,7 @@ package com.example.meetexpress
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,7 +29,8 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
 
     val db = FirebaseFirestore.getInstance()
     private var storageRef = FirebaseStorage.getInstance().reference
-
+    private val privateMode = 0
+    private val prefsFileName = "prefs"
     var userId: String = ""
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: Event) {
 
@@ -43,14 +45,15 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
             val context = holder.cardView.context
-            val prefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+            val prefs: SharedPreferences = context.getSharedPreferences(prefsFileName, privateMode)
 
             val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val isMetered = cm.isActiveNetworkMetered
 
-
             val childRef =
                 if (!prefs.getBoolean("transfer", false)) {
+                    Log.d("XDDDD","LOL" )
+
                     if (isMetered) {
                         storageRef.child(
                             "events/" + snapshots.getSnapshot(position).id + "/" + snapshots.getSnapshot(
@@ -68,7 +71,7 @@ class FindEventRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
                     storageRef.child(
                         "events/" + snapshots.getSnapshot(position).id + "/" + snapshots.getSnapshot(
                             position
-                        ).id + "_2.jpg"
+                        ).id + "_1.jpg"
                     )
                 }
             val dateFormat = SimpleDateFormat("dd-MM-yyyy")

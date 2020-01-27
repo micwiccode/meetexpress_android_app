@@ -54,12 +54,14 @@ class SettingsActivity : AppCompatActivity() {
         lateinit var soundPref: SwitchPreferenceCompat
         lateinit var soundFilePref: ListPreference
         lateinit var vibrationsPref: SwitchPreferenceCompat
+        lateinit var transferPref: SwitchPreferenceCompat
         private val privateMode = 0
         private val prefsFileName = "prefs"
         private val theme = "theme"
         private val sound = "sound"
         private val chooseRingtone = "chooseRingtone"
         private val vibrations = "vibrations"
+        private val transfer = "transfer"
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 
@@ -68,6 +70,7 @@ class SettingsActivity : AppCompatActivity() {
             soundPref = this.findPreference("sound")!!
             soundFilePref = this.findPreference("chooseRingtone")!!
             vibrationsPref = this.findPreference("vibrations")!!
+            transferPref = this.findPreference("transfer")!!
 
             getPreferences()
 
@@ -99,6 +102,11 @@ class SettingsActivity : AppCompatActivity() {
                 editor.apply()
                 true
             }
+            transferPref.setOnPreferenceClickListener {
+                editor.putBoolean(transfer, transferPref.isChecked)
+                editor.apply()
+                true
+            }
         }
 
         private fun getPreferences() {
@@ -110,6 +118,7 @@ class SettingsActivity : AppCompatActivity() {
             soundPref.isChecked = prefs.getBoolean(sound, false)
             soundFilePref.value = prefs.getInt(chooseRingtone, 1).toString()
             vibrationsPref.isChecked = prefs.getBoolean(vibrations, false)
+            transferPref.isChecked = prefs.getBoolean(transfer, false)
         }
 
         override fun onResume() {

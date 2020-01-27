@@ -115,7 +115,7 @@ class MyEventDetails: AppCompatActivity() {
                     }
                 } else {
                     storageRef.child(
-                        "events/" + intent.getStringExtra("eventId") + "/"+ intent.getStringExtra("eventId")+"_2.jpg"
+                        "events/" + intent.getStringExtra("eventId") + "/"+ intent.getStringExtra("eventId")+"_1.jpg"
                     )
                 }
             childRef.downloadUrl.addOnSuccessListener {

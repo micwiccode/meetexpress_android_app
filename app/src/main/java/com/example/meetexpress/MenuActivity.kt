@@ -120,14 +120,28 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     fun openDrawer() {
         drawerLayout?.openDrawer(nav)
         user_name.text = profile!!.name
+        user_name.setOnClickListener{
+            val i = Intent(this@MenuActivity, UserDetails::class.java)
+            startActivity(i)
+        }
+
         user.text = profile!!.name + " " + profile!!.surname
+        user.setOnClickListener{
+            val i = Intent(this@MenuActivity, UserDetails::class.java)
+            startActivity(i)
+        }
         Picasso.get().load(photoUri).resize(85, 85).centerCrop().into(user_image, object: Callback {
             override fun onSuccess() {
                 val bitmap = user_image.drawable.toBitmap()
                 val selectedImage = RoundedBitmapDrawableFactory.create(resources, bitmap)
                 selectedImage.isCircular = true
                 user_image.setImageDrawable(null)
-                user_image.setImageDrawable(selectedImage)            }
+                user_image.setImageDrawable(selectedImage)
+                user_image.setOnClickListener{
+                    val i = Intent(this@MenuActivity, UserDetails::class.java)
+                    startActivity(i)
+                }
+            }
 
             override fun onError(e: Exception?) {
             }
@@ -209,6 +223,8 @@ class MenuActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()){
+            auth.signOut()
+
             super.onBackPressed()
             return
         }

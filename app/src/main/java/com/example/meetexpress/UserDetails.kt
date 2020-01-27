@@ -80,13 +80,17 @@ class UserDetails : AppCompatActivity() {
                 view.findViewById<TextInputLayout>(R.id.input_layout_value).error = "Value is required"
             }
             else {
-                changeValue(index, newValue)
-                dialog.dismiss()
+                if(changeValue(index, newValue)){
+                    dialog.dismiss()
+                }else{
+                    view.findViewById<TextInputLayout>(R.id.input_layout_value).error = "Age must be lower than 100"
+                }
+
             }
         }
     }
 
-    private fun changeValue(index: Int, newValue : String) {
+    private fun changeValue(index: Int, newValue : String): Boolean {
 
         val profileRef = db.collection("profiles").document(auth.currentUser!!.uid)
         when(index){
@@ -99,14 +103,21 @@ class UserDetails : AppCompatActivity() {
                 profileRef.update("surname", newValue)
             }
             2 -> {
-                age.text = newValue
-                profileRef.update("age", newValue.toInt())
+
+                if(newValue.toInt()>100){
+                    return false
+                }
+                else{
+                    age.text = newValue
+                    profileRef.update("age", newValue.toInt())
+                }
             }
             3 -> {
                 city.text = newValue
                 profileRef.update("city", newValue)
             }
         }
+        return true
     }
 
     private fun changePhoto() {

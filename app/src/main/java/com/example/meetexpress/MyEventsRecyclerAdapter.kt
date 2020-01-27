@@ -45,7 +45,7 @@ class MyEventsRecyclerAdapter(options: FirestoreRecyclerOptions<Event>) :
                     storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_2.jpg")
                 }
             }else{
-                storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_2.jpg")
+                storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_1.jpg")
             }
         val dateFormat = SimpleDateFormat("dd-MM-yyyy")
         holder.cardTitle.text = model.name

@@ -14,6 +14,9 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
@@ -24,9 +27,13 @@ class FindEventDetails : AppCompatActivity() {
     private val privateMode = 0
     private val prefsFileName = "prefs"
     private var storageRef = FirebaseStorage.getInstance().reference
+    private lateinit var auth: FirebaseAuth
+    var eventId: String = ""
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        auth = FirebaseAuth.getInstance()
         val prefs: SharedPreferences = getSharedPreferences(prefsFileName, privateMode)
         val themeController = ThemeController()
         setTheme(themeController.changeTheme(prefs))
@@ -39,6 +46,9 @@ class FindEventDetails : AppCompatActivity() {
             val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
             mapIntent.setPackage("com.google.android.apps.maps")
             startActivity(mapIntent)
+        }
+        take_part_btn.setOnClickListener {
+            takePart()
         }
     }
 
@@ -58,7 +68,7 @@ class FindEventDetails : AppCompatActivity() {
             val prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE)
             val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val isMetered = cm.isActiveNetworkMetered
-
+            eventId = intent.getStringExtra("eventId")
             val childRef =
                 if (!prefs.getBoolean("transfer", false)) {
                     if (isMetered) {
@@ -72,7 +82,7 @@ class FindEventDetails : AppCompatActivity() {
                     }
                 } else {
                     storageRef.child(
-                        "events/" + intent.getStringExtra("eventId") + "/"+ intent.getStringExtra("eventId")+"_2.jpg"
+                        "events/" + intent.getStringExtra("eventId") + "/"+ intent.getStringExtra("eventId")+"_1.jpg"
                     )
                 }
             childRef.downloadUrl.addOnSuccessListener {
@@ -84,5 +94,12 @@ class FindEventDetails : AppCompatActivity() {
                     .into(image)
             }
         }
+    }
+    private fun takePart() {
+        db.collection("events").document(eventId).update("profiles", FieldValue.arrayUnion(auth.currentUser!!.uid))
+        db.collection("profiles").document(auth.currentUser!!.uid)
+            .update("takingPartEvents", FieldValue.arrayUnion(eventId))
+        db.collection("events").document(eventId).update("actualPeople", FieldValue.increment(1))
+        finish()
     }
 }

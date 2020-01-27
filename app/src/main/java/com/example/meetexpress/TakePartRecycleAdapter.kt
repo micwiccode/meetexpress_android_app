@@ -2,6 +2,7 @@ package com.example.meetexpress
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -40,13 +41,33 @@ class TakePartRecycleAdapter(options: FirestoreRecyclerOptions<Event>) :
         val context = holder.cardView.context
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val isMetered = cm.isActiveNetworkMetered
+        val prefs: SharedPreferences = context.getSharedPreferences("prefs", 0)
 
 
-        val childRef = if(isMetered){
-            storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_1.jpg")
-        } else{
-            storageRef.child("events/" + snapshots.getSnapshot(position).id + "/"+ snapshots.getSnapshot(position).id+"_2.jpg")
-        }
+        val childRef =
+            if (!prefs.getBoolean("transfer", false)) {
+                Log.d("XDDDD","LOL" )
+
+                if (isMetered) {
+                    storageRef.child(
+                        "events/" + snapshots.getSnapshot(position).id + "/" + snapshots.getSnapshot(
+                            position
+                        ).id + "_1.jpg"
+                    )
+                } else {
+                    storageRef.child(
+                        "events/" + snapshots.getSnapshot(position).id + "/" + snapshots.getSnapshot(
+                            position
+                        ).id + "_2.jpg"
+                    )
+                }
+            } else {
+                storageRef.child(
+                    "events/" + snapshots.getSnapshot(position).id + "/" + snapshots.getSnapshot(
+                        position
+                    ).id + "_1.jpg"
+                )
+            }
         holder.cardTitle.text = model.name
         holder.cardMembersActual.text = model.actualPeople.toString()
         holder.cardMembersMax.text = model.maxPeople.toString()
